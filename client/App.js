@@ -1,15 +1,5 @@
-import { View, Text } from "react-native";
+import Register from "./screens/auth/Register";
 
 export default function App() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Test</Text>
-    </View>
-  );
+  return <Register />;
 }
