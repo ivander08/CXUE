@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import InputBox from '../../components/InputBox';
 
@@ -9,7 +9,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
-    <View style={styles.container}>
+    <ImageBackground source={require('../../assets/images/background.png')} style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.pageTitle}>Register</Text>
         <Text style={styles.pageTitleDesc}>Create an account to continue.</Text>
@@ -26,7 +26,7 @@ const Register = () => {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    marginLeft: 10,
   },
   scrollContent: {
     flexGrow: 1,
@@ -54,23 +53,22 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'left',
     marginLeft: 20,
-    fontStyle: 'extra light',
   },
   link: {
     marginTop: 10,
-    marginBottom: 10, // Reduce marginBottom to move the button closer
+    marginBottom: 10,
     color: 'red',
     textDecorationLine: 'underline',
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 10, // Reduce marginTop to move the button closer to the input fields
+    marginTop: 10,
     marginRight: 20,
   },
   button: {
     backgroundColor: 'red',
-    borderRadius: 15, // Adjust as needed
+    borderRadius: 15,
     paddingVertical: 10,
     paddingHorizontal: 30,
     marginTop: 10,
