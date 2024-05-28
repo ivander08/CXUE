@@ -26,9 +26,6 @@ CXUE is a hybrid mobile application combining features from the CGV app and the 
 4. **Add beverages to your order.**
 5. **Proceed to checkout and complete the purchase.**
 
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Contact
 For any questions or suggestions, feel free to contact any team member or open an issue on GitHub.
 
