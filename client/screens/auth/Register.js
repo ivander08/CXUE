@@ -1,28 +1,22 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, TextInput } from 'react-native';
+import React,{useState} from 'react';
+import InputBox from '../../components/InputBox';
 
 const Register = () => {
+  const [name,setName] = useState('');
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const [confirmPassword,setConfirmPassword] = useState('');
   return (
     <View style={styles.container}>
       <Text style={styles.pageTitle}>Register</Text>
       <View style={{ marginHorizontal: 20 }}>
-        <Text>Name</Text>
-        <TextInput style={styles.input}
-          placeholder="Enter your name"
-        />
-        <Text>Email</Text>
-        <TextInput style={styles.input}
-          placeholder="Enter your email"
-        />
-        <Text>Password</Text>
-        <TextInput style={styles.input}
-          placeholder="Enter your password"
-        />
-        <Text>Confirm Password</Text>
-        <TextInput style={styles.input}
-          placeholder="Confirm your password"
-        />
+        <InputBox inputTitle={"Name"} value={name} setValue={setName}/>
+        <InputBox inputTitle={"Email"} keyboardType={"email-address"} autoComplete={"email"} value={email} setValue={setEmail}/>
+        <InputBox inputTitle={"Password"} secureTextEntry={true} autoComplete={"password"} value={password} setValue={setPassword}/>
+        <InputBox inputTitle={"Confirm Password"} secureTextEntry={true} autoComplete={"password"} value={confirmPassword} setValue={setConfirmPassword}/>
       </View>
+      <Text>{JSON.stringify({name,email,password,confirmPassword}, null, 4)}</Text>
     </View>
   )
 }
