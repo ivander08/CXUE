@@ -2,45 +2,27 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground }
 import React, { useState } from 'react';
 import InputBox from '../../components/InputBox';
 
-const Register = ({ navigation }) => {
-  const [name, setName] = useState('');
+const Login = ( navigation ) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleRegister = () => {
-    if (!email || !password || !confirmPassword) {
-      alert('Please fill all fields');
-      return;
-    }
+  const handleLogin = () => {
 
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      alert('Please enter a valid email address.');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      alert('Passwords do not match.');
-      return;
-    }
-
-    navigation.navigate('Login');
+    navigation.navigate('Home');
   };
 
   return (
     <ImageBackground source={require('../../assets/images/background.png')} style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.pageTitle}>Register</Text>
+        <Text style={styles.pageTitle}>Login</Text>
         <Text style={styles.pageTitleDesc}>Create an account to continue.</Text>
         <View style={{ marginHorizontal: 20 }}>
-          <InputBox iconName="torso" iconSize={22} iconColor={"grey"} value={name} setValue={setName} placeholder={'FULL NAME'} />
           <InputBox iconName="mail" iconSize={22} iconColor={"grey"} keyboardType={"email-address"} autoComplete={"email"} value={email} setValue={setEmail} placeholder={'EMAIL'} />
           <InputBox iconName="lock" iconSize={22} iconColor={"grey"} secureTextEntry={true} autoComplete={"password"} value={password} setValue={setPassword} placeholder={'PASSWORD'} />
-          <InputBox iconName="lock" iconSize={22} iconColor={"grey"} secureTextEntry={true} autoComplete={"password"} value={confirmPassword} setValue={setConfirmPassword} placeholder={'CONFIRM PASSWORD'} />
           <Text style={styles.link} onPress={() => {}}>or login here</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handleRegister}>
-              <Text style={styles.buttonText}>REGISTER</Text>
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+              <Text style={styles.buttonText}>LOGIN</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -99,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Register;
+export default Login;

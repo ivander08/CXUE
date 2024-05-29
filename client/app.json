@@ -7,6 +7,14 @@
       "ios",
       "android",
       "web"
+    ],
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Inter-Black.ttf", "./assets/fonts/Inter-ExtraLight.ttf"]
+        }
+      ]
     ]
   }
 }
