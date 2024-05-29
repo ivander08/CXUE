@@ -2,20 +2,24 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import LottieView from 'lottie-react-native';
 
-const LoadingScreenWhite = () => {
+const LoadingScreenWhite = ({navigation}) => {
     const [animationFinished, setAnimationFinished] = useState(false);
     const animationRef = useRef(null);
 
     useEffect(() => {
         if (animationFinished) {
         const timeout = setTimeout(() => {
+            // the loading loop
             setAnimationFinished(false);
             animationRef.current.play();
-        }, 2000); // Show image for 2 seconds before looping animation again
+
+            //navigate. (Add this screen on App.js first)
+            // navigation.navigate('Register'); 
+        }, 2000);
 
         return () => clearTimeout(timeout);
         }
-    }, [animationFinished]);
+    }, [animationFinished, navigation]);
 
     const handleAnimationFinish = () => {
         setAnimationFinished(true);
