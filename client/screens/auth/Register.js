@@ -2,11 +2,30 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground }
 import React, { useState } from 'react';
 import InputBox from '../../components/InputBox';
 
-const Register = () => {
+const Register = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleRegister = () => {
+    if (!email || !password || !confirmPassword) {
+      alert('Please fill all fields');
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+
+    navigation.navigate('Login');
+  };
 
   return (
     <ImageBackground source={require('../../assets/images/background.png')} style={styles.container}>
@@ -20,7 +39,7 @@ const Register = () => {
           <InputBox iconName="lock" iconSize={22} iconColor={"grey"} secureTextEntry={true} autoComplete={"password"} value={confirmPassword} setValue={setConfirmPassword} placeholder={'CONFIRM PASSWORD'} />
           <Text style={styles.link} onPress={() => {}}>or login here</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => {}}>
+            <TouchableOpacity style={styles.button} onPress={handleRegister}>
               <Text style={styles.buttonText}>REGISTER</Text>
             </TouchableOpacity>
           </View>

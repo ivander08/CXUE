@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'gray',
     padding: 5,
+    fontFamily: 'interExtraLight'
   },
   icon: {
     marginRight: 10,
