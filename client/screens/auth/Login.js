@@ -2,11 +2,20 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground }
 import React, { useState } from 'react';
 import InputBox from '../../components/InputBox';
 
-const Login = ( navigation ) => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
+    if (!email || !password) {
+      alert('Please fill all fields');
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
 
     navigation.navigate('Home');
   };
