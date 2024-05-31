@@ -37,7 +37,7 @@ const Register = ({ navigation }) => {
           <InputBox iconName="mail" iconSize={22} iconColor={"grey"} keyboardType={"email-address"} autoComplete={"email"} value={email} setValue={setEmail} placeholder={'EMAIL'} />
           <InputBox iconName="lock" iconSize={22} iconColor={"grey"} secureTextEntry={true} autoComplete={"password"} value={password} setValue={setPassword} placeholder={'PASSWORD'} />
           <InputBox iconName="lock" iconSize={22} iconColor={"grey"} secureTextEntry={true} autoComplete={"password"} value={confirmPassword} setValue={setConfirmPassword} placeholder={'CONFIRM PASSWORD'} />
-          <Text style={styles.link} onPress={() => {}}>or login here</Text>
+          <Text style={styles.link} onPress={() => {}}>Have an account? Login</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleRegister}>
               <Text style={styles.buttonText}>REGISTER</Text>
