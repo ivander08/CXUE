@@ -19,7 +19,7 @@ const Login = ( navigation ) => {
         <View style={{ marginHorizontal: 20 }}>
           <InputBox iconName="mail" iconSize={22} iconColor={"grey"} keyboardType={"email-address"} autoComplete={"email"} value={email} setValue={setEmail} placeholder={'EMAIL'} />
           <InputBox iconName="lock" iconSize={22} iconColor={"grey"} secureTextEntry={true} autoComplete={"password"} value={password} setValue={setPassword} placeholder={'PASSWORD'} />
-          <Text style={styles.link} onPress={() => {}}>or login here</Text>
+          <Text style={styles.link} onPress={() => {}}>Don't have an account? Register here</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleLogin}>
               <Text style={styles.buttonText}>LOGIN</Text>
