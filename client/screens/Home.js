@@ -30,6 +30,13 @@ const Home = () => {
               }}
             />
             <Text style={styles.movieTitle}>Parasite</Text>
+            <Text style={styles.movieRating}>
+              {`iMDb ${(
+                Math.floor(Math.random() * 10) +
+                1 +
+                Math.random()
+              ).toFixed(1)}`}
+            </Text>
           </View>
         ))}
       </PagerView>
@@ -113,7 +120,7 @@ const styles = StyleSheet.create({
   },
   movieTitle: {
     position: "absolute",
-    bottom: 10,
+    bottom: 30,
     left: 15,
     fontSize: 30,
     color: "white",
@@ -141,7 +148,18 @@ const styles = StyleSheet.create({
   carouselImage: {
     width: "100%",
     height: 400,
-    
+  },
+  movieRating: {
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    backgroundColor: "red",
+    position: "absolute",
+    bottom: 0,
+    left: 15,
+    fontSize: 11,
+    color: "white",
+    fontFamily: "interBlack",
   },
 });
 
