@@ -6,6 +6,7 @@ import { useFonts } from "expo-font";
 import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Home from "./screens/Home";
+import DrinkSelection from "./screens/DrinkSelection"; // Import screen baru
 import { Image } from "react-native";
 
 const Stack = createStackNavigator();
@@ -25,7 +26,7 @@ export default function App() {
       <Stack.Navigator>
         {/* <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="CXUE"
           component={Home}
           options={{
@@ -35,6 +36,30 @@ export default function App() {
               fontWeight: "bold",
               fontSize: 20,
               color: "white",
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 50, height: 50, marginLeft: 120 }}
+              />
+            ),
+          }}
+        /> */}
+        <Stack.Screen 
+          name="CXUE" 
+          component={DrinkSelection} // Tambahkan screen baru ke dalam stack navigator
+          options={{
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "red",
             },
             headerTitleAlign: "center",
             headerTransparent: true,
