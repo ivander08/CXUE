@@ -16,29 +16,63 @@ const drinks = [
   { id: '7', name: 'Bubble Milk Tea', price: 'Rp 18,000', image: require('../assets/images/bubble_milk_tea.png') },
 ];
 
-const DrinkItem = ({ item, addToCart }) => (
-  <View style={styles.itemContainer}>
-    <Image source={item.image} style={styles.image} />
-    <View style={styles.textContainer}>
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.price}>{item.price}</Text>
-      <TouchableOpacity style={styles.button} onPress={() => addToCart(item)}>
-        <Text style={styles.buttonText}>+ Add to Cart</Text>
-      </TouchableOpacity>
+const DrinkItem = ({ item, cart, addToCart, removeFromCart }) => {
+  const quantity = cart[item.id] || 0;
+
+  return (
+    <View style={styles.itemContainer}>
+      <Image source={item.image} style={styles.image} />
+      <View style={styles.textContainer}>
+        <Text style={styles.name}>{item.name}</Text>
+        <Text style={styles.price}>{item.price}</Text>
+        {quantity === 0 ? (
+          <TouchableOpacity style={styles.button} onPress={() => addToCart(item)}>
+            <Text style={styles.buttonText}>+ Add to Cart</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.quantityContainer}>
+            <TouchableOpacity style={styles.quantityButton} onPress={() => removeFromCart(item)}>
+              <Text style={styles.quantityButtonText}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.quantityText}>{quantity}</Text>
+            <TouchableOpacity style={styles.quantityButton} onPress={() => addToCart(item)}>
+              <Text style={styles.quantityButtonText}>+</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 const DrinkList = () => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState({});
 
   const addToCart = (item) => {
-    setCart([...cart, item]);
+    setCart((prevCart) => ({
+      ...prevCart,
+      [item.id]: (prevCart[item.id] || 0) + 1,
+    }));
+  };
+
+  const removeFromCart = (item) => {
+    setCart((prevCart) => {
+      const newCart = { ...prevCart };
+      if (newCart[item.id] > 1) {
+        newCart[item.id] -= 1;
+      } else {
+        delete newCart[item.id];
+      }
+      return newCart;
+    });
   };
 
   const renderCartSummary = () => {
-    const itemCounts = cart.reduce((acc, item) => {
-      acc[item.name] = (acc[item.name] || 0) + 1;
+    const itemCounts = Object.entries(cart).reduce((acc, [id, count]) => {
+      const item = drinks.find((drink) => drink.id === id);
+      if (item) {
+        acc[item.name] = count;
+      }
       return acc;
     }, {});
 
@@ -53,10 +87,10 @@ const DrinkList = () => {
     <View style={styles.container}>
       <FlatList
         data={drinks}
-        renderItem={({ item }) => <DrinkItem item={item} addToCart={addToCart} />}
+        renderItem={({ item }) => <DrinkItem item={item} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} />}
         keyExtractor={(item) => item.id}
       />
-      {cart.length > 0 && (
+      {Object.keys(cart).length > 0 && (
         <View style={styles.orderSummaryContainer}>
           <Text style={styles.orderSummaryHead}>Order Summary</Text>
           <Text style={styles.orderSummaryContent}>{renderCartSummary()}</Text>
@@ -70,7 +104,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fefefe',
-    paddingTop: 90,
+    paddingTop: 85,
   },
   itemContainer: {
     flexDirection: 'row',
@@ -113,6 +147,27 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  quantityContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  quantityButton: {
+    paddingVertical: 3,
+    paddingHorizontal: 13,
+    backgroundColor: '#FF1F1F',
+    borderRadius: 50,
+  },
+  quantityButtonText: {
+    color: '#fefefe',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  quantityText: {
+    marginHorizontal: 10,
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
   orderSummaryContainer: {
     position: 'absolute',
     bottom: 0,
@@ -122,21 +177,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF1F1F',
     marginVertical: 20,
     marginHorizontal: 20,
-    padding: 15,
+    paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
   orderSummaryHead: {
     color: '#fefefe',
     fontSize: 16,
-    fontWeight: '900'
+    fontWeight: '900',
   },
   orderSummaryContent: {
     color: '#fefefe',
     textAlign: 'center',
     opacity: 0.8,
     fontSize: 10.75,
-    marginTop: 3.5
+    marginTop: 3.5,
   },
 });
 
