@@ -26,6 +26,7 @@ const Home = () => {
             <Image source={page} style={styles.carouselImage} />
             <LinearGradient
               colors={["transparent", "#0D160B"]}
+              locations={[0, 0.9]}
               style={{
                 position: "absolute",
                 left: 0,
@@ -120,6 +121,7 @@ const styles = StyleSheet.create({
   },
   pagerView: {
     height: 400,
+    marginBottom: 20,
   },
   movieCardContainer: {
     marginLeft: 15,
@@ -135,8 +137,9 @@ const styles = StyleSheet.create({
   },
   dotIndicator: {
     flexDirection: "row",
-    marginTop: 10,
-    marginLeft: 285,
+    marginTop: -50,
+    marginLeft: 290,
+    marginBottom: 20,
   },
   dot: {
     width: 10,
