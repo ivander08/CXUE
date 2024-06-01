@@ -6,7 +6,8 @@ import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Home from "./screens/Home";
 import MovieDetails from "./screens/MovieDetails";
-import { Image } from "react-native";
+import DrinkSelection from "./screens/DrinkSelection"; // Import screen baru
+import { Image, TouchableOpacity, View, Text } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -76,6 +77,41 @@ export default function App() {
               />
             ),
           }}
+        />
+        <Stack.Screen 
+          name="DrinkSelection" 
+          component={DrinkSelection} // Tambahkan screen baru ke dalam stack navigator
+          options={({ navigation }) => ({
+            headerTitle: () => (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                  source={require("./assets/images/logo-2.png")}
+                  style={{ width: 35, height: 35 }}
+                />
+                <Text style={{
+                  fontFamily: "interBlack",
+                  fontStyle: "italic",
+                  fontWeight: "900",
+                  fontSize: 22.5,
+                  color: "red",
+                  marginLeft: 5,
+                }}>CXUE</Text>
+              </View>
+            ),
+            headerTitleAlign: 'center',
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image
+                  source={require("./assets/images/btn-back.png")}
+                  style={{ width: 7.23 * 1.75, height: 12.8 * 1.75, marginLeft: 20, marginBottom: 2.5}}
+                />
+              </TouchableOpacity>
+            ),
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
