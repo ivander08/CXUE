@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 const MovieCard = ({ 
     movieName,
     movieDuration,
-    moviePoster
+    moviePoster,
+    onPress
 }) => {
   return (
     <View style={styles.card}>
-      <Image source={moviePoster} style={styles.poster} />
+      <TouchableOpacity onPress={onPress}>
+        <Image source={moviePoster} style={styles.poster} />
+      </TouchableOpacity>
       <Text style={styles.title}>{movieName}</Text>
       <Text style={styles.duration}>{movieDuration}</Text>
     </View>

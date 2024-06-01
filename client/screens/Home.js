@@ -3,12 +3,17 @@ import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import MovieCard from "../components/MovieCard";
 import PagerView from "react-native-pager-view";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const numPages = 4;
+  const navigation = useNavigation();
 
   const pages = Array(numPages).fill(require("../assets/images/Parasite.jpg"));
+  const handleMovieCardPress = () => {
+    navigation.navigate("MovieDetails");
+  };
   return (
     <ScrollView style={styles.container}>
       <PagerView
@@ -60,6 +65,7 @@ const Home = () => {
             movieName={"The Batman"}
             moviePoster={require("../assets/images/Batman.jpg")}
             movieDuration={"2h 56m"}
+            onPress={handleMovieCardPress}
           />
           <MovieCard
             movieName={"The Batman"}
