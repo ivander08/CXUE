@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import InputBox from '../../components/InputBox';
-import { CommonActions } from '@react-navigation/native';
 
 const Register = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -25,14 +24,7 @@ const Register = ({ navigation }) => {
       return;
     }
 
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [
-          { name: 'Login' },
-        ],
-      })
-    );
+    navigation.navigate('Login');
   };
 
   return (
