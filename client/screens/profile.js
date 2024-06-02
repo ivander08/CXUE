@@ -50,9 +50,9 @@ const styles = StyleSheet.create({
         color: '#F1F1F1',
     },
     line: {
-        height: 0.25, // You can adjust the height as needed
-        width: '90%', // This will make the line take up the full width of the container
-        backgroundColor: '#FFFFFF', // Change this to the color you want the line to be
+        height: 0.25, 
+        width: '90%', 
+        backgroundColor: '#FFFFFF', 
         marginBottom: 16,
     },
     innerContainer: {
