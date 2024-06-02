@@ -9,7 +9,10 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const Home = () => {
+const MovieDetails = ({ navigation }) => {
+  const handleTickets = () => {
+    navigation.navigate('DatenTheaterSelection');
+  }
   return (
     <ScrollView style={styles.container}>
       <View style={styles.page}>
@@ -47,7 +50,7 @@ const Home = () => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleTickets}>
           <Text style={styles.buttonText}>Buy tickets</Text>
         </TouchableOpacity>
       </View>
@@ -133,8 +136,7 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   ratingBoxItem: {
-    marginLeft: 190,
-    marginRight: 5,
+    marginLeft: 170,
     backgroundColor: "#9C914F",
     padding: 2,
   },
@@ -185,4 +187,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default MovieDetails;

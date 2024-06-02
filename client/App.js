@@ -6,6 +6,7 @@ import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Home from "./screens/Home";
 import MovieDetails from "./screens/MovieDetails";
+import DatenTheaterSelection from "./screens/DatenTheaterSelection";
 import { Image } from "react-native";
 
 const Stack = createStackNavigator();
@@ -36,7 +37,7 @@ export default function App() {
               fontWeight: "bold",
               fontSize: 20,
               color: "white",
-              marginLeft: 30,
+              marginLeft: 39,
             },
             headerTitleAlign: "center",
             headerTransparent: true,
@@ -62,7 +63,7 @@ export default function App() {
               fontWeight: "bold",
               fontSize: 20,
               color: "white",
-              marginLeft: 30,
+              marginLeft: 39,
             },
             headerTitleAlign: "center",
             headerTransparent: true,
@@ -77,6 +78,32 @@ export default function App() {
             ),
           }}
         />
+        <Stack.Screen
+          name="DatenTheaterSelection"
+          component={DatenTheaterSelection}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 30, height: 30, marginLeft: 160 }}
+              />
+            ),
+          }}
+        ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
