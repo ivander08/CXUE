@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import InputBox from '../../components/InputBox';
+import { CommonActions } from '@react-navigation/native';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -17,7 +18,14 @@ const Login = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('CXUE');
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: 'Home' },
+        ],
+      })
+    );
   };
 
   return (
