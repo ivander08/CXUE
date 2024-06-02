@@ -7,6 +7,7 @@ import LoadingScreenWhite from "./screens/LoadingScreenWhite";
 import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Home from "./screens/Home";
+import Profile from "./screens/profile";
 import MovieDetails from "./screens/MovieDetails";
 import { Image } from "react-native";
 
@@ -30,6 +31,7 @@ export default function App() {
         <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
         <Stack.Screen name="LoadingWhite" component={LoadingScreenWhite} options={{ headerShown: false }}/> 
+
         <Stack.Screen
           name="Home"
           component={Home}
@@ -68,6 +70,32 @@ export default function App() {
               fontSize: 20,
               color: "white",
               marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 30, height: 30, marginLeft: 160 }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "white",
+              marginLeft: 30,
             },
             headerTitleAlign: "center",
             headerTransparent: true,
