@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import LottieView from 'lottie-react-native';
 
-const LoadingScreenWhite = () => {
+const LoadingScreenWhite = ({navigation}) => {
+    //This navigation might need to be changed after the app is fully implemented
+    // loading screen for 4 seconds
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            navigation.navigate('Home'); 
+        }, 4000);
+
+        return () => clearTimeout(timeout);
+    }, []);
+
     return (
         <View style={styles.container}>
             <LottieView 
-            autoPlay 
-            source={require('../assets/animations/logoWhite.json')} 
-            style={{width: '60%', aspectRatio: 1}} 
+                autoPlay 
+                source={require('../assets/animations/logoWhite.json')} 
+                style={{width: '60%', aspectRatio: 1}} 
             />
         </View>
     );

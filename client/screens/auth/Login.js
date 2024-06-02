@@ -17,7 +17,7 @@ const Login = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('CXUE');
+    navigation.navigate('LoadingWhite');
   };
 
   return (

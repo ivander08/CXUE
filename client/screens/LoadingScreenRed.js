@@ -3,23 +3,34 @@ import { View, StyleSheet, Image } from 'react-native';
 import LottieView from 'lottie-react-native';
 
 const LoadingScreenWhite = ({navigation}) => {
+    //This navigation might need to be changed after the app is fully implemented
     const [animationFinished, setAnimationFinished] = useState(false);
     const animationRef = useRef(null);
-
+    
+    //navigate when animation ends (roughly around 4 sec)
     useEffect(() => {
         if (animationFinished) {
         const timeout = setTimeout(() => {
             // the loading loop (comment or delete two lines below to stop the loop)
-            setAnimationFinished(false);
-            animationRef.current.play();
+            // setAnimationFinished(false);
+            // animationRef.current.play();
 
             //navigate. (Add this screen on App.js first)
-            // navigation.navigate('Login'); 
-        }, 2000);
+            navigation.navigate('Login'); 
+        }, 1000);
 
         return () => clearTimeout(timeout);
         }
     }, [animationFinished, navigation]);
+
+    // //navigate after 4 seconds
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //         navigation.navigate('Login'); 
+    //     }, 4000);
+
+    //     return () => clearTimeout(timeout);
+    // }, []);
 
     const handleAnimationFinish = () => {
         setAnimationFinished(true);
