@@ -2,13 +2,22 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground }
 import React, { useState } from 'react';
 import InputBox from '../../components/InputBox';
 
-const Login = ( navigation ) => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
+    if (!email || !password) {
+      alert('Please fill all fields');
+      return;
+    }
 
-    navigation.navigate('Home');
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    navigation.navigate('CXUE');
   };
 
   return (
@@ -19,7 +28,7 @@ const Login = ( navigation ) => {
         <View style={{ marginHorizontal: 20 }}>
           <InputBox iconName="mail" iconSize={22} iconColor={"grey"} keyboardType={"email-address"} autoComplete={"email"} value={email} setValue={setEmail} placeholder={'EMAIL'} />
           <InputBox iconName="lock" iconSize={22} iconColor={"grey"} secureTextEntry={true} autoComplete={"password"} value={password} setValue={setPassword} placeholder={'PASSWORD'} />
-          <Text style={styles.link} onPress={() => {}}>or login here</Text>
+          <Text style={styles.link} onPress={() => navigation.navigate('Register')}>or register here</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleLogin}>
               <Text style={styles.buttonText}>LOGIN</Text>
