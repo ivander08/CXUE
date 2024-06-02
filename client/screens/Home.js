@@ -5,6 +5,7 @@ import PagerView from "react-native-pager-view";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
+
 const Home = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const numPages = 4;
@@ -15,12 +16,13 @@ const Home = () => {
     navigation.navigate("MovieDetails");
   };
   return (
-    <ScrollView style={styles.container}>
-      <PagerView
-        style={styles.pagerView}
-        initialPage={0}
-        onPageSelected={(event) => setPageIndex(event.nativeEvent.position)}
-      >
+    <>
+      <ScrollView style={styles.container}>
+        <PagerView
+          style={styles.pagerView}
+          initialPage={0}
+          onPageSelected={(event) => setPageIndex(event.nativeEvent.position)}
+        >
         {pages.map((page, index) => (
           <View style={styles.page} key={index + 1}>
             <Image source={page} style={styles.carouselImage} />
@@ -99,6 +101,8 @@ const Home = () => {
         </ScrollView>
       </View>
     </ScrollView>
+    {/* <Navbar /> */}
+    </>
   );
 };
 
