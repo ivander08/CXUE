@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     },
     theater: {
         color: 'white',
-        fontFamily: 'interBlackExtraLight',
+        fontFamily: 'interExtraLight',
         fontSize: 10,
         fontWeight: 'medium',
         margin: 10,

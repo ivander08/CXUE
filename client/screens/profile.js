@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#0D160B",
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingTop: 100,
     },
     title: {
         fontSize: 13,
@@ -50,10 +49,12 @@ const styles = StyleSheet.create({
         color: '#F1F1F1',
     },
     line: {
-        height: 0.25, 
-        width: '90%', 
-        backgroundColor: '#FFFFFF', 
-        marginBottom: 16,
+        width: '90%',
+        height: 1,
+        backgroundColor: 'white',
+        opacity: 0.3,
+        marginTop: 70,
+        marginBottom: 20,
     },
     innerContainer: {
         width: '90%',

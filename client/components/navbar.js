@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet,StatusBar } from 'react-native';
 import Home from '../screens/Home';
 import MyTickets from '../screens/MyTickets';
 import Profile from '../screens/profile';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, Foundation } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 const Tab = createBottomTabNavigator();
 const HomeScreen = 'Home';
@@ -15,6 +16,7 @@ const ProfileScreen = 'Profile';
 const Navbar = () => {
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar hidden={true} />
             <Tab.Navigator
                 initialRouteName={HomeScreen}
                 screenOptions={({ route }) => ({

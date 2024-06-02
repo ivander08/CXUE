@@ -16,6 +16,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
+    inter: require("./assets/fonts/Inter-Regular.ttf"),
     interBlack: require("./assets/fonts/Inter-Black.ttf"),
     interExtraLight: require("./assets/fonts/Inter-ExtraLight.ttf"),
   });
@@ -33,32 +34,6 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
         <Stack.Screen name="LoadingWhite" component={LoadingScreenWhite} options={{ headerShown: false }}/> 
 
-        <Stack.Screen
-          name="Navbar"
-          component={Navbar}
-          options={{
-            title: "CXUE",
-            headerTitleStyle: {
-              fontFamily: "interBlack",
-              fontStyle: "italic",
-              fontWeight: "bold",
-              fontSize: 20,
-              color: "white",
-              marginLeft: 30,
-            },
-            headerTitleAlign: "center",
-            headerTransparent: true,
-            headerStyle: {
-              backgroundColor: "transparent",
-            },
-            headerLeft: () => (
-              <Image
-                source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
-              />
-            ),
-          }}
-        />
         <Stack.Screen
           name="Home"
           component={Home}
@@ -123,6 +98,33 @@ export default function App() {
               fontSize: 20,
               color: "white",
               marginLeft: 30,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 30, height: 30, marginLeft: 160 }}
+              />
+            ),
+          }}
+          
+        />
+        <Stack.Screen
+          name="Navbar"
+          component={Navbar}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "white",
+              marginLeft: 39,
             },
             headerTitleAlign: "center",
             headerTransparent: true,
