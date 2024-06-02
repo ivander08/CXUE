@@ -9,12 +9,12 @@ const LoadingScreenWhite = ({navigation}) => {
     useEffect(() => {
         if (animationFinished) {
         const timeout = setTimeout(() => {
-            // the loading loop
+            // the loading loop (comment or delete two lines below to stop the loop)
             setAnimationFinished(false);
             animationRef.current.play();
 
             //navigate. (Add this screen on App.js first)
-            // navigation.navigate('Register'); 
+            // navigation.navigate('Login'); 
         }, 2000);
 
         return () => clearTimeout(timeout);
