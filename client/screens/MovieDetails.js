@@ -133,8 +133,7 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   ratingBoxItem: {
-    marginLeft: 190,
-    marginRight: 5,
+    marginLeft: 170,
     backgroundColor: "#9C914F",
     padding: 2,
   },
