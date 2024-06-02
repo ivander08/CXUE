@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import InputBox from '../../components/InputBox';
+import { CommonActions } from '@react-navigation/native';
 
 const Register = ({ navigation }) => {
   const [name, setName] = useState('');
