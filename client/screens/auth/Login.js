@@ -22,8 +22,7 @@ const Login = ({ navigation }) => {
       CommonActions.reset({
         index: 0,
         routes: [
-          { name: 'Home' },
-          { name: 'Navbar'}
+          { name: 'LoadingWhite' },
         ],
       })
     );

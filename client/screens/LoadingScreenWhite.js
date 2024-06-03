@@ -1,13 +1,22 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import LottieView from 'lottie-react-native';
+import { CommonActions } from '@react-navigation/native';
 
 const LoadingScreenWhite = ({navigation}) => {
     //This navigation might need to be changed after the app is fully implemented
     // loading screen for 4 seconds
     useEffect(() => {
         const timeout = setTimeout(() => {
-            navigation.navigate('Home'); 
+            navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [
+                    { name: 'Home' },
+                    { name: 'Navbar' },
+                  ],
+                })
+              );
         }, 4000);
 
         return () => clearTimeout(timeout);
