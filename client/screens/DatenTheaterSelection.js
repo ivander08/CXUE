@@ -8,8 +8,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import Collapsible from "react-native-collapsible";
 
 const DatenTheaterSelection = ({ navigation }) => {
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
   const [selectedDay, setSelectedDay] = useState(null);
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date();
@@ -18,6 +21,7 @@ const DatenTheaterSelection = ({ navigation }) => {
   });
 
   const formatDate = (date) => {
+    if (!date) return formatDate(new Date());
     const weekday = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][
       date.getDay()
     ];
@@ -91,7 +95,7 @@ const DatenTheaterSelection = ({ navigation }) => {
                 ]}
                 onPress={() => {
                   setSelectedDay(day);
-                  console.log(`Ticket for ${formatDate(day)}`);
+                  // console.log(`Ticket for ${formatDate(day)}`);
                 }}
               >
                 <Text
@@ -126,6 +130,35 @@ const DatenTheaterSelection = ({ navigation }) => {
             );
           })}
         </ScrollView>
+        <View style={styles.dropdownContainer}>
+          <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)}>
+            <Text>CGV Central Park</Text>
+          </TouchableOpacity>
+          <Collapsible collapsed={isCollapsed}>
+            <ScrollView>
+              <View style={styles.dropdown}>
+                <Text>Regular 2D</Text>
+                <Text>10:00 AM</Text>
+                <Text>10:00 AM</Text>
+                <Text>10:00 AM</Text>
+                <Text>10:00 AM</Text>
+                <Text>10:00 AM</Text>
+              </View>
+              <View style={styles.dropdown}>
+                <Text>Satin Class</Text>
+                <Text>10:00 AM</Text>
+                <Text>10:00 AM</Text>
+                <Text>2:00 PM</Text>
+              </View>
+              <View style={styles.dropdown}>
+                <Text>4DX</Text>
+                <Text>10:00 AM</Text>
+                <Text>10:00 AM</Text>
+                <Text>2:00 PM</Text>
+              </View>
+            </ScrollView>
+          </Collapsible>
+        </View>
       </ScrollView>
     </ScrollView>
   );
@@ -246,9 +279,19 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 5,
-    backgroundColor: 'white',
-    alignSelf: 'center',
+    backgroundColor: "white",
+    alignSelf: "center",
     bottom: -15,
+  },
+  dropdownContainer: {
+    backgroundColor: "#141A12",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    padding: 10,
+  },
+  dropdown: {
+    height: 400,
+    width: 200,
   },
 });
 
