@@ -11,6 +11,71 @@ import { LinearGradient } from "expo-linear-gradient";
 import Collapsible from "react-native-collapsible";
 
 const DatenTheaterSelection = ({ navigation }) => {
+  const [cinemas, setCinemas] = useState([
+    {
+      name: "CGV Central Park",
+      showtimes: [
+        {
+          type: "Regular 2D",
+          times: [
+            { time: "10:00", isSelected: false },
+            { time: "12:00", isSelected: false },
+            { time: "10:00", isSelected: false },
+            { time: "12:00", isSelected: false },
+            { time: "10:00", isSelected: false },
+            { time: "12:00", isSelected: false },
+            { time: "10:00", isSelected: false },
+            { time: "12:00", isSelected: false },
+            // ...
+          ],
+        },
+        {
+          type: "Satin Class",
+          times: [
+            { time: "10:00", isSelected: false },
+            { time: "2:00", isSelected: false },
+            // ...
+          ],
+        },
+        {
+          type: "4DX",
+          times: [
+            { time: "10:00", isSelected: false },
+            { time: "2:00", isSelected: false },
+            // ...
+          ],
+        },
+      ],
+    },
+    // ...
+  ]);
+
+  const selectTime = (cinemaIndex, showtimeIndex, timeIndex) => {
+    setCinemas(
+      cinemas.map((cinema, i) => {
+        if (i === cinemaIndex) {
+          return {
+            ...cinema,
+            showtimes: cinema.showtimes.map((showtime, j) => {
+              return {
+                ...showtime,
+                times: showtime.times.map((time, k) => {
+                  if (j === showtimeIndex && k === timeIndex) {
+                    return { ...time, isSelected: true };
+                  }
+                  return { ...time, isSelected: false };
+                }),
+              };
+            }),
+          };
+        }
+        return cinema;
+      })
+    );
+  };
+
+  const [selectedCinema, setSelectedCinema] = useState(null);
+
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const [selectedDay, setSelectedDay] = useState(null);
@@ -130,35 +195,70 @@ const DatenTheaterSelection = ({ navigation }) => {
             );
           })}
         </ScrollView>
-        <View style={styles.dropdownContainer}>
-          <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)}>
-            <Text>CGV Central Park</Text>
-          </TouchableOpacity>
-          <Collapsible collapsed={isCollapsed}>
-            <ScrollView>
-              <View style={styles.dropdown}>
-                <Text>Regular 2D</Text>
-                <Text>10:00 AM</Text>
-                <Text>10:00 AM</Text>
-                <Text>10:00 AM</Text>
-                <Text>10:00 AM</Text>
-                <Text>10:00 AM</Text>
+        <ScrollView>
+          <View style={styles.cinemasContainer}>
+            {cinemas.map((cinema, cinemaIndex) => (
+              <View key={cinemaIndex}>
+                <TouchableOpacity
+                  style={styles.cinemaButton}
+                  onPress={() => {
+                    setIsCollapsed(
+                      selectedCinema === cinemaIndex ? !isCollapsed : false
+                    );
+                    setSelectedCinema(
+                      selectedCinema === cinemaIndex ? null : cinemaIndex
+                    );
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.cinemaName,
+                      selectedCinema === cinemaIndex &&
+                        styles.cinemaNameSelected,
+                    ]}
+                  >
+                    {cinema.name}
+                  </Text>
+                </TouchableOpacity>
+                <Collapsible collapsed={isCollapsed}>
+                  {cinema.showtimes.map((showtime, showtimeIndex) => (
+                    <View style={styles.showTimeContainer} key={showtimeIndex}>
+                      <Text style={styles.showtimeType}>{showtime.type}</Text>
+                      <ScrollView horizontal>
+                        {showtime.times.map((time, timeIndex) => (
+                          <TouchableOpacity
+                            key={timeIndex}
+                            style={[
+                              styles.timeButton,
+                              time.isSelected
+                                ? styles.selectedTimeButton
+                                : styles.unselectedTimeButton,
+                            ]}
+                            onPress={() => {
+                              selectTime(cinemaIndex, showtimeIndex, timeIndex);
+                              // console.log(`Selected time: ${time.time}`);
+                            }}
+                          >
+                            <Text
+                              style={
+                                time.isSelected
+                                  ? styles.selectedTimeText
+                                  : styles.unselectedTimeText
+                              }
+                            >
+                              {time.time}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                      </ScrollView>
+                      <View style={styles.divider} />
+                    </View>
+                  ))}
+                </Collapsible>
               </View>
-              <View style={styles.dropdown}>
-                <Text>Satin Class</Text>
-                <Text>10:00 AM</Text>
-                <Text>10:00 AM</Text>
-                <Text>2:00 PM</Text>
-              </View>
-              <View style={styles.dropdown}>
-                <Text>4DX</Text>
-                <Text>10:00 AM</Text>
-                <Text>10:00 AM</Text>
-                <Text>2:00 PM</Text>
-              </View>
-            </ScrollView>
-          </Collapsible>
-        </View>
+            ))}
+          </View>
+        </ScrollView>
       </ScrollView>
     </ScrollView>
   );
@@ -292,6 +392,59 @@ const styles = StyleSheet.create({
   dropdown: {
     height: 400,
     width: 200,
+  },
+  divider: {
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
+    marginVertical: 10,
+  },
+  showtimeType: {
+    color: "#fff",
+    fontSize: 18,
+    marginVertical: 10,
+    marginHorizontal: 5,
+  },
+  timeButton: {
+    borderWidth: 1,
+    borderColor: "white",
+    paddingHorizontal: 23,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginHorizontal: 5,
+    backgroundColor: "transparent",
+  },
+  selectedTimeButton: {
+    backgroundColor: "red",
+    borderColor: "transparent",
+  },
+  selectedTimeText: {
+    color: "#fff",
+  },
+  unselectedTimeText: {
+    color: "#fff",
+  },
+  cinemaButton: {
+    padding: 10,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  cinemaName: {
+    color: "#fff",
+    fontSize: 18,
+    textAlign: "left",
+    marginLeft: 10,
+  },
+  cinemasContainer: {
+    backgroundColor: "#141A12",
+    marginHorizontal: 15,
+    borderRadius: 10,
+    marginVertical: 7,
+  },
+  cinemaNameSelected: {
+    fontWeight: "bold",
+  },
+  showTimeContainer: {
+    marginHorizontal: 10,
   },
 });
 
