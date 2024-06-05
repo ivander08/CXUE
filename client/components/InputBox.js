@@ -25,6 +25,7 @@ const InputBox = ({
         secureTextEntry={secureTextEntry}
         value={value}
         onChangeText={(text) => setValue(text)}
+        autoCapitalize='none'
       />
     </View>
   );

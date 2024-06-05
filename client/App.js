@@ -11,8 +11,23 @@ import Navbar from "./components/navbar";
 import Profile from "./screens/profile";
 import MovieDetails from "./screens/MovieDetails";
 import { Image } from "react-native";
+import { initializeApp } from '@firebase/app';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
+
 
 const Stack = createStackNavigator();
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAjZI1Ptz_Pi8tALO40dedUdZ1N3s8hIYE",
+  authDomain: "cxue-7755b.firebaseapp.com",
+  projectId: "cxue-7755b",
+  storageBucket: "cxue-7755b.appspot.com",
+  messagingSenderId: "958920074281",
+  appId: "1:958920074281:web:bff7918778be443366e838",
+  measurementId: "G-V76PY08GJ3",
+};
+
+const app = initializeApp(firebaseConfig);
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -29,10 +44,26 @@ export default function App() {
     //The navigation might need to be changed after the app is fully implemented
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="LoadingRed" component={LoadingScreenRed} options={{ headerShown: false }}/>
-        <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
-        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
-        <Stack.Screen name="LoadingWhite" component={LoadingScreenWhite} options={{ headerShown: false }}/> 
+        <Stack.Screen
+          name="LoadingRed"
+          component={LoadingScreenRed}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LoadingWhite"
+          component={LoadingScreenWhite}
+          options={{ headerShown: false }}
+        />
 
         <Stack.Screen
           name="Home"
@@ -111,7 +142,6 @@ export default function App() {
               />
             ),
           }}
-          
         />
         <Stack.Screen
           name="Navbar"
