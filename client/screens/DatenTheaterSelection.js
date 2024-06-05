@@ -9,11 +9,49 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Collapsible from "react-native-collapsible";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const DatenTheaterSelection = ({ navigation }) => {
+  const [selectedCinema, setSelectedCinema] = useState(null);
+
   const [cinemas, setCinemas] = useState([
     {
       name: "CGV Central Park",
+      showtimes: [
+        {
+          type: "Regular 2D",
+          times: [
+            { time: "10:00", isSelected: false },
+            { time: "12:00", isSelected: false },
+            { time: "10:00", isSelected: false },
+            { time: "12:00", isSelected: false },
+            { time: "10:00", isSelected: false },
+            { time: "12:00", isSelected: false },
+            { time: "10:00", isSelected: false },
+            { time: "12:00", isSelected: false },
+            // ...
+          ],
+        },
+        {
+          type: "Satin Class",
+          times: [
+            { time: "10:00", isSelected: false },
+            { time: "2:00", isSelected: false },
+            // ...
+          ],
+        },
+        {
+          type: "4DX",
+          times: [
+            { time: "10:00", isSelected: false },
+            { time: "2:00", isSelected: false },
+            // ...
+          ],
+        },
+      ],
+    },
+    {
+      name: "CGV Test",
       showtimes: [
         {
           type: "Regular 2D",
@@ -74,9 +112,16 @@ const DatenTheaterSelection = ({ navigation }) => {
     );
   };
 
-  const [selectedCinema, setSelectedCinema] = useState(null);
+  const [collapsedStates, setCollapsedStates] = useState(
+    cinemas.map(() => true)
+  );
 
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const toggleCollapse = (index) => {
+    setCollapsedStates((prevState) =>
+      prevState.map((state, i) => (i === index ? !state : true))
+    );
+    setSelectedCinema(index === selectedCinema ? null : index);
+  };
 
   const [selectedDay, setSelectedDay] = useState(null);
   const days = Array.from({ length: 7 }, (_, i) => {
@@ -117,7 +162,7 @@ const DatenTheaterSelection = ({ navigation }) => {
         />
 
         <LinearGradient
-          colors={["transparent", "#0D160B"]}
+          colors={["transparent", "#141C14"]}
           locations={[0, 0.9]}
           style={{
             position: "absolute",
@@ -198,17 +243,10 @@ const DatenTheaterSelection = ({ navigation }) => {
         <ScrollView>
           <View style={styles.cinemasContainer}>
             {cinemas.map((cinema, cinemaIndex) => (
-              <View key={cinemaIndex}>
+              <View style={styles.cinemasIndexContainer} key={cinemaIndex}>
                 <TouchableOpacity
                   style={styles.cinemaButton}
-                  onPress={() => {
-                    setIsCollapsed(
-                      selectedCinema === cinemaIndex ? !isCollapsed : false
-                    );
-                    setSelectedCinema(
-                      selectedCinema === cinemaIndex ? null : cinemaIndex
-                    );
-                  }}
+                  onPress={() => toggleCollapse(cinemaIndex)}
                 >
                   <Text
                     style={[
@@ -219,10 +257,25 @@ const DatenTheaterSelection = ({ navigation }) => {
                   >
                     {cinema.name}
                   </Text>
+                  {/* Render different icon based on collapsed or expanded state */}
+                  {collapsedStates[cinemaIndex] ? (
+                    <MaterialIcons
+                      name="keyboard-arrow-down"
+                      size={30}
+                      color="white"
+                    />
+                  ) : (
+                    <MaterialIcons
+                      name="keyboard-arrow-up"
+                      size={30}
+                      color="white"
+                    />
+                  )}
                 </TouchableOpacity>
-                <Collapsible collapsed={isCollapsed}>
+                <Collapsible collapsed={collapsedStates[cinemaIndex]}>
                   {cinema.showtimes.map((showtime, showtimeIndex) => (
-                    <View style={styles.showTimeContainer} key={showtimeIndex}>
+                    <View key={showtimeIndex}>
+                      <View style={styles.divider} />
                       <Text style={styles.showtimeType}>{showtime.type}</Text>
                       <ScrollView horizontal>
                         {showtime.times.map((time, timeIndex) => (
@@ -251,7 +304,6 @@ const DatenTheaterSelection = ({ navigation }) => {
                           </TouchableOpacity>
                         ))}
                       </ScrollView>
-                      <View style={styles.divider} />
                     </View>
                   ))}
                 </Collapsible>
@@ -267,7 +319,7 @@ const DatenTheaterSelection = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0D160B",
+    backgroundColor: "#141C14",
   },
   page: {
     justifyContent: "center",
@@ -383,26 +435,18 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     bottom: -15,
   },
-  dropdownContainer: {
-    backgroundColor: "#141A12",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    padding: 10,
-  },
-  dropdown: {
-    height: 400,
-    width: 200,
-  },
   divider: {
     borderBottomColor: "gray",
     borderBottomWidth: 1,
-    marginVertical: 10,
+    marginVertical: 20,
   },
   showtimeType: {
     color: "#fff",
     fontSize: 18,
     marginVertical: 10,
-    marginHorizontal: 5,
+    marginHorizontal: 20,
+    fontFamily: "interExtraLight",
+    fontSize: 16,
   },
   timeButton: {
     borderWidth: 1,
@@ -411,7 +455,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 20,
     marginHorizontal: 5,
-    backgroundColor: "transparent",
+    backgroundColor: "#1C1C1C",
+    opacity: 1,
   },
   selectedTimeButton: {
     backgroundColor: "red",
@@ -424,27 +469,35 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   cinemaButton: {
-    padding: 10,
+    paddingTop: 20,
+    paddingHorizontal: 20,
     borderRadius: 5,
     marginVertical: 10,
+    backgroundColor: "#1a1a1a",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   cinemaName: {
     color: "#fff",
     fontSize: 18,
     textAlign: "left",
     marginLeft: 10,
+    fontFamily: "interExtraLight",
   },
   cinemasContainer: {
-    backgroundColor: "#141A12",
-    marginHorizontal: 15,
-    borderRadius: 10,
-    marginVertical: 7,
+    marginHorizontal: 13,
+    borderRadius: 15,
+    marginVertical: 13,
   },
   cinemaNameSelected: {
     fontWeight: "bold",
   },
-  showTimeContainer: {
-    marginHorizontal: 10,
+  cinemasIndexContainer: {
+    backgroundColor: "#1a1a1a",
+    marginBottom: 20,
+    paddingBottom: 20,
+    borderRadius: 15,
   },
 });
 
