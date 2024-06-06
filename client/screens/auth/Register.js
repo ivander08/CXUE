@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import InputBox from '../../components/InputBox';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const Register = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -24,7 +25,26 @@ const Register = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('Login');
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        navigation.navigate('Login');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if (errorCode === 'auth/email-already-in-use') {
+          alert('The email address is already in use by another account.');
+          return;
+        }
+        if (errorCode === 'auth/weak-password') {
+          alert('The password is too weak.');
+          return;
+        }
+        // Display the error to the user
+        console.log(errorCode, errorMessage)
+      });
   };
 
   return (
