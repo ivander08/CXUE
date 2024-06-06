@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import InputBox from '../../components/InputBox';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const Register = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -24,7 +25,26 @@ const Register = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('Login');
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        navigation.navigate('Login');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if (errorCode === 'auth/email-already-in-use') {
+          alert('The email address is already in use by another account.');
+          return;
+        }
+        if (errorCode === 'auth/weak-password') {
+          alert('The password is too weak.');
+          return;
+        }
+        // Display the error to the user
+        console.log(errorCode, errorMessage)
+      });
   };
 
   return (
@@ -37,7 +57,7 @@ const Register = ({ navigation }) => {
           <InputBox iconName="mail" iconSize={22} iconColor={"grey"} keyboardType={"email-address"} autoComplete={"email"} value={email} setValue={setEmail} placeholder={'EMAIL'} />
           <InputBox iconName="lock" iconSize={22} iconColor={"grey"} secureTextEntry={true} autoComplete={"password"} value={password} setValue={setPassword} placeholder={'PASSWORD'} />
           <InputBox iconName="lock" iconSize={22} iconColor={"grey"} secureTextEntry={true} autoComplete={"password"} value={confirmPassword} setValue={setConfirmPassword} placeholder={'CONFIRM PASSWORD'} />
-          <Text style={styles.link} onPress={() => {}}>Have an account? Login</Text>
+          <Text style={styles.link} onPress={() => navigation.navigate('Login')}>or login here</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleRegister}>
               <Text style={styles.buttonText}>REGISTER</Text>
