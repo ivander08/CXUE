@@ -109,16 +109,7 @@ const DatenTheaterSelection = ({ navigation }) => {
   };
 
   const handleBuyTickets = () => {
-    const selectedCinema = cinemas[selectedCinema];
-    const selectedShowtime = selectedCinema.showtimes.find((showtime) =>
-      showtime.times.some((time) => time.isSelected)
-    );
-    const selectedTime = selectedShowtime.times.find(
-      (time) => time.isSelected
-    ).time;
-
-    const description = `${selectedCinema.name} | ${selectedShowtime.type} | ${selectedTime}`;
-    navigation.navigate("OtherScreen", { description });
+    navigation.navigate("SeatSelection");
   };
 
   const [collapsedStates, setCollapsedStates] = useState(
@@ -347,7 +338,7 @@ const DatenTheaterSelection = ({ navigation }) => {
               </View>
             ))}
             <View style={styles.divider} />
-            <TouchableOpacity onPress={null} style={styles.buttonContainer}>
+            <TouchableOpacity onPress={handleBuyTickets} style={styles.buttonContainer}>
               <Text style={styles.buttonTitle}>Buy Tickets</Text>
               {selectedCinema !== null &&
                 cinemas[selectedCinema].showtimes.map(
