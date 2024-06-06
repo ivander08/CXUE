@@ -56,9 +56,9 @@ export default function App() {
           name="LoadingWhite"
           component={LoadingScreenWhite}
           options={{ headerShown: false }}
-        />
+        /> */}
 
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Home"
           component={Home}
           options={{
@@ -67,7 +67,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 39,
             },
@@ -79,11 +79,11 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 160 }}
               />
             ),
           }}
-        /> */}
+        />  */}
         {/* <Stack.Screen
           name="MovieDetails"
           component={MovieDetails}
@@ -93,7 +93,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 39,
             },
@@ -105,7 +105,7 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
@@ -119,7 +119,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 30,
             },
@@ -131,12 +131,12 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Navbar"
           component={Navbar}
           options={{
@@ -145,7 +145,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 39,
             },
@@ -157,11 +157,11 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
-        /> 
+        />  */}
         <Stack.Screen 
           name="DrinkSelection" 
           component={DrinkSelection} 
@@ -170,7 +170,7 @@ export default function App() {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Image
                   source={require("./assets/images/logo-2.png")}
-                  style={{ width: 35, height: 35 }}
+                  style={{ width: 33, height: 33 }}
                 />
                 <Text style={{
                   fontFamily: "interBlack",
