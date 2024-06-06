@@ -6,7 +6,8 @@ import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Home from "./screens/Home";
 import MovieDetails from "./screens/MovieDetails";
-import DrinkSelection from "./screens/DrinkSelection"; // Import screen baru
+import DrinkSelection from "./screens/DrinkSelection"; 
+import OnboardingDrink from "./screens/OnboardingDrink";  
 import { Image, TouchableOpacity, View, Text } from "react-native";
 
 const Stack = createStackNavigator();
@@ -26,7 +27,7 @@ export default function App() {
       <Stack.Navigator>
         {/* <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Home"
           component={Home}
           options={{
@@ -51,8 +52,8 @@ export default function App() {
               />
             ),
           }}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="MovieDetails"
           component={MovieDetails}
           options={{
@@ -77,6 +78,41 @@ export default function App() {
               />
             ),
           }}
+        /> */}
+         <Stack.Screen 
+          name="OnboardingDrink" 
+          component={OnboardingDrink} // Tambahkan screen baru ke dalam stack navigator
+          options={({ navigation }) => ({
+            headerTitle: () => (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                  source={require("./assets/images/logo.png")}
+                  style={{ width: 33, height: 33 }}
+                />
+                <Text style={{
+                  fontFamily: "interBlack",
+                  fontStyle: "italic",
+                  fontWeight: "900",
+                  fontSize: 22.5,
+                  color: "white",
+                  marginLeft: 5,
+                }}>CXUE</Text>
+              </View>
+            ),
+            headerTitleAlign: 'center',
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image
+                  source={require("./assets/images/btn-back-white.png")}
+                  style={{ width: 7.23 * 1.75, height: 12.8 * 1.75, marginLeft: 20, marginBottom: 2.5}}
+                />
+              </TouchableOpacity>
+            ),
+          })}
         />
         <Stack.Screen 
           name="DrinkSelection" 
