@@ -14,6 +14,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 const DatenTheaterSelection = ({ navigation }) => {
   const [selectedCinema, setSelectedCinema] = useState(null);
 
+  // dummy array for cinemas
   const [cinemas, setCinemas] = useState([
     {
       name: "CGV Central Park",
@@ -86,21 +87,38 @@ const DatenTheaterSelection = ({ navigation }) => {
           return {
             ...cinema,
             showtimes: cinema.showtimes.map((showtime, j) => {
-              return {
-                ...showtime,
-                times: showtime.times.map((time, k) => {
-                  if (j === showtimeIndex && k === timeIndex) {
-                    return { ...time, isSelected: true };
-                  }
-                  return { ...time, isSelected: false };
-                }),
-              };
+              if (j === showtimeIndex) {
+                return {
+                  ...showtime,
+                  times: showtime.times.map((time, k) => {
+                    if (k === timeIndex) {
+                      return { ...time, isSelected: true };
+                    }
+                    return { ...time, isSelected: false };
+                  }),
+                };
+              }
+              return showtime;
             }),
           };
         }
         return cinema;
       })
     );
+    setSelectedCinema(cinemaIndex);
+  };
+
+  const handleBuyTickets = () => {
+    const selectedCinema = cinemas[selectedCinema];
+    const selectedShowtime = selectedCinema.showtimes.find((showtime) =>
+      showtime.times.some((time) => time.isSelected)
+    );
+    const selectedTime = selectedShowtime.times.find(
+      (time) => time.isSelected
+    ).time;
+
+    const description = `${selectedCinema.name} | ${selectedShowtime.type} | ${selectedTime}`;
+    navigation.navigate("OtherScreen", { description });
   };
 
   const [collapsedStates, setCollapsedStates] = useState(
@@ -329,6 +347,24 @@ const DatenTheaterSelection = ({ navigation }) => {
               </View>
             ))}
             <View style={styles.divider} />
+            <TouchableOpacity onPress={null} style={styles.buttonContainer}>
+              <Text style={styles.buttonTitle}>Buy Tickets</Text>
+              {selectedCinema !== null &&
+                cinemas[selectedCinema].showtimes.map(
+                  (showtime, showtimeIndex) =>
+                    showtime.times.map(
+                      (time, timeIndex) =>
+                        time.isSelected && (
+                          <Text
+                            key={`${showtimeIndex}-${timeIndex}`}
+                            style={styles.buttonDescription}
+                          >
+                            {`${cinemas[selectedCinema].name} | ${showtime.type} | ${time.time}`}
+                          </Text>
+                        )
+                    )
+                )}
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </ScrollView>
@@ -522,6 +558,23 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingBottom: 20,
     borderRadius: 15,
+  },
+  buttonContainer: {
+    backgroundColor: '#FF1F1F',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonTitle: {
+    fontFamily: 'inter',
+    color: 'white',
+    fontSize: 17,
+  },
+  buttonDescription: {
+    fontFamily: 'interExtraLight',
+    color: 'white',
+    fontSize: 12,
+    marginTop: 5,
   },
 });
 
