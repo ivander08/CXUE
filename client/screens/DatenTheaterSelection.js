@@ -23,29 +23,26 @@ const DatenTheaterSelection = ({ navigation }) => {
           times: [
             { time: "10:00", isSelected: false },
             { time: "12:00", isSelected: false },
-            { time: "10:00", isSelected: false },
-            { time: "12:00", isSelected: false },
-            { time: "10:00", isSelected: false },
-            { time: "12:00", isSelected: false },
-            { time: "10:00", isSelected: false },
-            { time: "12:00", isSelected: false },
-            // ...
+            { time: "14:00", isSelected: false },
+            { time: "16:00", isSelected: false },
+            { time: "18:00", isSelected: false },
+            { time: "20:00", isSelected: false },
+            { time: "22:00", isSelected: false },
+            { time: "23:00", isSelected: false },
           ],
         },
         {
           type: "Satin Class",
           times: [
             { time: "10:00", isSelected: false },
-            { time: "2:00", isSelected: false },
-            // ...
+            { time: "14:00", isSelected: false },
           ],
         },
         {
           type: "4DX",
           times: [
             { time: "10:00", isSelected: false },
-            { time: "2:00", isSelected: false },
-            // ...
+            { time: "14:00", isSelected: false },
           ],
         },
       ],
@@ -58,34 +55,28 @@ const DatenTheaterSelection = ({ navigation }) => {
           times: [
             { time: "10:00", isSelected: false },
             { time: "12:00", isSelected: false },
-            { time: "10:00", isSelected: false },
-            { time: "12:00", isSelected: false },
-            { time: "10:00", isSelected: false },
-            { time: "12:00", isSelected: false },
-            { time: "10:00", isSelected: false },
-            { time: "12:00", isSelected: false },
-            // ...
+            { time: "14:00", isSelected: false },
+            { time: "16:00", isSelected: false },
+            { time: "18:00", isSelected: false },
+            { time: "20:00", isSelected: false },
           ],
         },
         {
           type: "Satin Class",
           times: [
             { time: "10:00", isSelected: false },
-            { time: "2:00", isSelected: false },
-            // ...
+            { time: "14:00", isSelected: false },
           ],
         },
         {
           type: "4DX",
           times: [
             { time: "10:00", isSelected: false },
-            { time: "2:00", isSelected: false },
-            // ...
+            { time: "14:00", isSelected: false },
           ],
         },
       ],
     },
-    // ...
   ]);
 
   const selectTime = (cinemaIndex, showtimeIndex, timeIndex) => {
@@ -153,6 +144,17 @@ const DatenTheaterSelection = ({ navigation }) => {
     return `${weekday} ${day} ${month}`;
   };
 
+  const getCurrentTime = () => {
+    const now = new Date();
+    return now.getHours() * 60 + now.getMinutes();
+  };
+
+  const isTimePast = (timeString) => {
+    const [hours, minutes] = timeString.split(":").map(Number);
+    const timeInMinutes = hours * 60 + minutes;
+    return timeInMinutes <= getCurrentTime();
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.page}>
@@ -190,7 +192,11 @@ const DatenTheaterSelection = ({ navigation }) => {
         </View>
       </View>
       <ScrollView style={styles.container}>
-        <ScrollView horizontal={true} style={styles.daysScrollView}>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={styles.daysScrollView}
+        >
           {days.map((day, index) => {
             const [weekday, dayNumber, month] = formatDate(day).split(" ");
             const isSelected = formatDate(day) === formatDate(selectedDay);
@@ -277,38 +283,52 @@ const DatenTheaterSelection = ({ navigation }) => {
                     <View key={showtimeIndex}>
                       <View style={styles.divider} />
                       <Text style={styles.showtimeType}>{showtime.type}</Text>
-                      <ScrollView horizontal>
-                        {showtime.times.map((time, timeIndex) => (
-                          <TouchableOpacity
-                            key={timeIndex}
-                            style={[
-                              styles.timeButton,
-                              time.isSelected
-                                ? styles.selectedTimeButton
-                                : styles.unselectedTimeButton,
-                            ]}
-                            onPress={() => {
-                              selectTime(cinemaIndex, showtimeIndex, timeIndex);
-                              // console.log(`Selected time: ${time.time}`);
-                            }}
-                          >
-                            <Text
-                              style={
+                      <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                      >
+                        {showtime.times.map((time, timeIndex) => {
+                          const isPast = isTimePast(time.time);
+                          return (
+                            <TouchableOpacity
+                              key={timeIndex}
+                              style={[
+                                styles.timeButton,
                                 time.isSelected
-                                  ? styles.selectedTimeText
-                                  : styles.unselectedTimeText
-                              }
+                                  ? styles.selectedTimeButton
+                                  : styles.unselectedTimeButton,
+                                isPast && styles.disabledTimeButton,
+                              ]}
+                              onPress={() => {
+                                if (!isPast) {
+                                  selectTime(
+                                    cinemaIndex,
+                                    showtimeIndex,
+                                    timeIndex
+                                  );
+                                }
+                              }}
+                              disabled={isPast}
                             >
-                              {time.time}
-                            </Text>
-                          </TouchableOpacity>
-                        ))}
+                              <Text
+                                style={
+                                  time.isSelected
+                                    ? styles.selectedTimeText
+                                    : styles.unselectedTimeText
+                                }
+                              >
+                                {time.time}
+                              </Text>
+                            </TouchableOpacity>
+                          );
+                        })}
                       </ScrollView>
                     </View>
                   ))}
                 </Collapsible>
               </View>
             ))}
+            <View style={styles.divider} />
           </View>
         </ScrollView>
       </ScrollView>
@@ -436,7 +456,7 @@ const styles = StyleSheet.create({
     bottom: -15,
   },
   divider: {
-    borderBottomColor: "gray",
+    borderBottomColor: "#1F271D",
     borderBottomWidth: 1,
     marginVertical: 20,
   },
@@ -467,6 +487,10 @@ const styles = StyleSheet.create({
   },
   unselectedTimeText: {
     color: "#fff",
+  },
+  disabledTimeButton: {
+    backgroundColor: "grey",
+    borderColor: "grey",
   },
   cinemaButton: {
     paddingTop: 20,
