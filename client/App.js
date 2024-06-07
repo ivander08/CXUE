@@ -196,7 +196,6 @@ export default function App() {
             ),
           }}
         ></Stack.Screen>
-
         <Stack.Screen 
           name="OnboardingDrink" 
           component={OnboardingDrink} // Tambahkan screen baru ke dalam stack navigator
@@ -277,32 +276,6 @@ export default function App() {
             ),
           })}
         />
-        <Stack.Screen
-          name="DatenTheaterSelection"
-          component={DatenTheaterSelection}
-          options={{
-            title: "CXUE",
-            headerTitleStyle: {
-              fontFamily: "interBlack",
-              fontStyle: "italic",
-              fontWeight: "bold",
-              fontSize: 20,
-              color: "white",
-              marginLeft: 39,
-            },
-            headerTitleAlign: "center",
-            headerTransparent: true,
-            headerStyle: {
-              backgroundColor: "transparent",
-            },
-            headerLeft: () => (
-              <Image
-                source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
-              />
-            ),
-          }}
-        ></Stack.Screen>
         <Stack.Screen
           name="SeatSelection"
           component={SeatSelection}
