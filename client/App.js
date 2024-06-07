@@ -8,6 +8,7 @@ import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Home from "./screens/Home";
 import DrinkSelection from "./screens/DrinkSelection"; // Import screen baru
+import OnboardingDrink from "./screens/OnboardingDrink"; // Import screen baru with 
 import Navbar from "./components/navbar";
 import Profile from "./screens/profile";
 import MovieDetails from "./screens/MovieDetails";
@@ -45,7 +46,7 @@ export default function App() {
     //The navigation might need to be changed after the app is fully implemented
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+         <Stack.Screen
           name="LoadingRed"
           component={LoadingScreenRed}
           options={{ headerShown: false }}
@@ -64,7 +65,7 @@ export default function App() {
           name="LoadingWhite"
           component={LoadingScreenWhite}
           options={{ headerShown: false }}
-        /> */}
+        /> 
         <Stack.Screen
           name="Home"
           component={Home}
@@ -170,6 +171,69 @@ export default function App() {
           }}
         />
         <Stack.Screen
+          name="DatenTheaterSelection"
+          component={DatenTheaterSelection}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 30, height: 30, marginLeft: 160 }}
+              />
+            ),
+          }}
+        ></Stack.Screen>
+
+        <Stack.Screen 
+          name="OnboardingDrink" 
+          component={OnboardingDrink} // Tambahkan screen baru ke dalam stack navigator
+          options={({ navigation }) => ({
+            headerTitle: () => (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                  source={require("./assets/images/logo.png")}
+                  style={{ width: 33, height: 33 }}
+                />
+                <Text style={{
+                  fontFamily: "interBlack",
+                  fontStyle: "italic",
+                  fontWeight: "900",
+                  fontSize: 22.5,
+                  color: "white",
+                  marginLeft: 5,
+                }}>CXUE</Text>
+              </View>
+            ),
+            headerTitleAlign: 'center',
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image
+                  source={require("./assets/images/btn-back-white.png")}
+                  style={{ width: 7.23 * 1.75, height: 12.8 * 1.75, marginLeft: 20, marginBottom: 2.5}}
+                />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+
+        <Stack.Screen
           name="DrinkSelection"
           component={DrinkSelection}
           options={({ navigation }) => ({
@@ -177,7 +241,7 @@ export default function App() {
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Image
                   source={require("./assets/images/logo-2.png")}
-                  style={{ width: 35, height: 35 }}
+                  style={{ width: 33, height: 33 }}
                 />
                 <Text
                   style={{
