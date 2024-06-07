@@ -14,6 +14,7 @@ import MovieDetails from "./screens/MovieDetails";
 import DatenTheaterSelection from "./screens/DatenTheaterSelection";
 import { Image, TouchableOpacity, View, Text } from "react-native";
 import { initializeApp } from "@firebase/app";
+import SeatSelection from "./screens/SeatSelection";
 
 const Stack = createStackNavigator();
 
@@ -44,7 +45,7 @@ export default function App() {
     //The navigation might need to be changed after the app is fully implemented
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="LoadingRed"
           component={LoadingScreenRed}
           options={{ headerShown: false }}
@@ -63,7 +64,7 @@ export default function App() {
           name="LoadingWhite"
           component={LoadingScreenWhite}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           name="Home"
           component={Home}
@@ -215,6 +216,32 @@ export default function App() {
         <Stack.Screen
           name="DatenTheaterSelection"
           component={DatenTheaterSelection}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 30, height: 30, marginLeft: 160 }}
+              />
+            ),
+          }}
+        ></Stack.Screen>
+        <Stack.Screen
+          name="SeatSelection"
+          component={SeatSelection}
           options={{
             title: "CXUE",
             headerTitleStyle: {
