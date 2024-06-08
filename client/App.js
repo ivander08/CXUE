@@ -1,7 +1,9 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Image, TouchableOpacity, View, Text } from "react-native";
 import { useFonts } from "expo-font";
+import { initializeApp } from "@firebase/app";
 import LoadingScreenRed from "./screens/LoadingScreenRed";
 import LoadingScreenWhite from "./screens/LoadingScreenWhite";
 import Register from "./screens/auth/Register";
@@ -14,8 +16,6 @@ import Profile from "./screens/profile";
 import MovieDetails from "./screens/MovieDetails";
 import DatenTheaterSelection from "./screens/DatenTheaterSelection";
 import OrderPay from "./screens/OrderPay";
-import { Image, TouchableOpacity, View, Text } from "react-native";
-import { initializeApp } from "@firebase/app";
 import SeatSelection from "./screens/SeatSelection";
 
 const Stack = createStackNavigator();
@@ -195,8 +195,34 @@ export default function App() {
                 style={{ width: 30, height: 30, marginLeft: 160 }}
               />
             ),
-          }}
+          }}  
         ></Stack.Screen>
+        <Stack.Screen
+          name="SeatSelection"
+          component={SeatSelection}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 30, height: 30, marginLeft: 160 }}
+              />
+            ),
+          }}
+        ></Stack.Screen> */}
         <Stack.Screen 
           name="OnboardingDrink" 
           component={OnboardingDrink} // Tambahkan screen baru ke dalam stack navigator
@@ -277,32 +303,6 @@ export default function App() {
             ),
           })}
         />
-        <Stack.Screen
-          name="SeatSelection"
-          component={SeatSelection}
-          options={{
-            title: "CXUE",
-            headerTitleStyle: {
-              fontFamily: "interBlack",
-              fontStyle: "italic",
-              fontWeight: "bold",
-              fontSize: 20,
-              color: "white",
-              marginLeft: 39,
-            },
-            headerTitleAlign: "center",
-            headerTransparent: true,
-            headerStyle: {
-              backgroundColor: "transparent",
-            },
-            headerLeft: () => (
-              <Image
-                source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
-              />
-            ),
-          }}
-        ></Stack.Screen> */}
         <Stack.Screen
           name="OrderPay"
           component={OrderPay}
