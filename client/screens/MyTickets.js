@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-function MyTickets() {
+function MyTickets({navigation}) {
     return (
         <View style={styles.container}>
             <View style={[styles.line]}></View>
@@ -13,7 +13,7 @@ function MyTickets() {
                             <Ionicons name="ticket" size={20} color="white" />    
                         </View>    
                         <Text style={styles.movie}>Parasite</Text>
-                        <TouchableOpacity style={styles.button} onPress={() => {}}>
+                        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("ShowTicket")}}>
                             <Text style={styles.buttonText}>Show Ticket</Text>
                         </TouchableOpacity>
                     </View>
@@ -43,7 +43,7 @@ function MyTickets() {
                             <Ionicons name="ticket" size={20} color="white" />    
                         </View> 
                         <Text style={styles.movie}>Spider-Man: Across the Spider-Verse</Text>
-                        <TouchableOpacity style={styles.button} onPress={() => {}}>
+                        <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate("ShowTicket")}}>
                             <Text style={styles.buttonText}>Show Ticket</Text>
                         </TouchableOpacity>
                     </View>
