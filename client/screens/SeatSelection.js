@@ -12,25 +12,49 @@ import { MaterialIcons } from "@expo/vector-icons";
 import Svg, { Path } from "react-native-svg";
 
 const SeatSelection = ({ navigation }) => {
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
   const [seats, setSeats] = useState([
     Array(9)
       .fill()
-      .map(() => Array(4).fill({ selected: false })),
+      .map(() =>
+        Array(4)
+          .fill()
+          .map(() => ({ selected: false }))
+      ),
     Array(9)
       .fill()
-      .map(() => Array(5).fill({ selected: false })),
+      .map(() =>
+        Array(5)
+          .fill()
+          .map(() => ({ selected: false }))
+      ),
     Array(9)
       .fill()
-      .map(() => Array(4).fill({ selected: false })),
+      .map(() =>
+        Array(4)
+          .fill()
+          .map(() => ({ selected: false }))
+      ),
   ]);
 
-  const handleSeatSelect = (group, row, col) => {
+  const handleSeatSelect = (groupIndex, rowIndex, seatIndex) => {
     const newSeats = [...seats];
-    newSeats[group][row][col] = {
-      ...newSeats[group][row][col],
-      selected: !newSeats[group][row][col].selected,
-    };
+    newSeats[groupIndex][rowIndex][seatIndex].selected =
+      !newSeats[groupIndex][rowIndex][seatIndex].selected;
+
+    const seatLabel = `${String.fromCharCode(65 + rowIndex)}${seatIndex + 1}`; // Rows are labeled with letters, seats are labeled with numbers
+    if (newSeats[groupIndex][rowIndex][seatIndex].selected) {
+      setSelectedSeats([...selectedSeats, seatLabel]);
+    } else {
+      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatLabel));
+    }
+
     setSeats(newSeats);
+  };
+
+  const handleSelectSeat = () => {
+    navigation.navigate("OnboardingDrink");
   };
 
   return (
@@ -81,9 +105,14 @@ const SeatSelection = ({ navigation }) => {
       </View>
       <View style={styles.seatsContainer}>
         {seats.map((group, groupIndex) => (
-          <View key={groupIndex} style={{margin: 5}}>
+          <View key={groupIndex} style={{ margin: 5 }}>
             {group.map((row, rowIndex) => (
               <View key={rowIndex} style={styles.seatRow}>
+                {groupIndex === 0 && (
+                  <Text key={rowIndex} style={styles.seatLabel}>
+                    {String.fromCharCode(65 + rowIndex)}
+                  </Text>
+                )}
                 {row.map((seat, seatIndex) => (
                   <TouchableOpacity
                     key={seatIndex}
@@ -100,6 +129,11 @@ const SeatSelection = ({ navigation }) => {
                       size={24}
                       color={seat.selected ? "red" : "white"}
                     />
+                    {rowIndex === group.length - 1 && (
+                      <Text key={seatIndex} style={styles.seatLabel}>
+                        {seatIndex + 1}
+                      </Text>
+                    )}
                   </TouchableOpacity>
                 ))}
               </View>
@@ -107,6 +141,27 @@ const SeatSelection = ({ navigation }) => {
           </View>
         ))}
       </View>
+      <View style={styles.legendContainer}>
+        <View style={styles.legendItem}>
+          <MaterialIcons name="event-seat" size={24} color="white" />
+          <Text style={styles.legendLabel}>Available</Text>
+        </View>
+        <View style={styles.legendItem}>
+          <MaterialIcons name="event-seat" size={24} color="gray" />
+          <Text style={styles.legendLabel}>Unavailable</Text>
+        </View>
+        <View style={styles.legendItem}>
+          <MaterialIcons name="event-seat" size={24} color="red" />
+          <Text style={styles.legendLabel}>Selected</Text>
+        </View>
+      </View>
+      <View style={styles.divider} />
+      <TouchableOpacity onPress={handleSelectSeat} style={styles.buttonContainer}>
+      <Text style={styles.buttonTitle}>Select Drinks</Text>
+        <Text style={styles.buttonDescription}>
+          {`${selectedSeats.length}x Tickets | ${selectedSeats.join(", ")}`}
+        </Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -206,6 +261,51 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 20,
     width: "100%",
+  },
+  seatLabel: {
+    color: "#636461",
+    fontSize: 10,
+    margin: 5,
+  },
+  divider: {
+    borderBottomColor: "#1F271D",
+    borderBottomWidth: 1,
+    marginVertical: 20,
+    marginHorizontal: 20,
+  },
+  legendContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: 20,
+    paddingHorizontal: 40,
+  },
+  legendItem: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  legendLabel: {
+    marginLeft: 5,
+    color: "#D1D2D0",
+    fontSize: 12,
+  },
+  buttonContainer: {
+    backgroundColor: "#FF1F1F",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
+  buttonTitle: {
+    fontFamily: "inter",
+    color: "white",
+    fontSize: 17,
+  },
+  buttonDescription: {
+    fontFamily: "interExtraLight",
+    color: "white",
+    fontSize: 12,
+    marginTop: 5,
   },
 });
 
