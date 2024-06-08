@@ -13,6 +13,7 @@ import Navbar from "./components/navbar";
 import Profile from "./screens/profile";
 import MovieDetails from "./screens/MovieDetails";
 import DatenTheaterSelection from "./screens/DatenTheaterSelection";
+import OrderPay from "./screens/OrderPay";
 import { Image, TouchableOpacity, View, Text } from "react-native";
 import { initializeApp } from "@firebase/app";
 import SeatSelection from "./screens/SeatSelection";
@@ -46,7 +47,7 @@ export default function App() {
     //The navigation might need to be changed after the app is fully implemented
     <NavigationContainer>
       <Stack.Navigator>
-         <Stack.Screen
+         {/* <Stack.Screen
           name="LoadingRed"
           component={LoadingScreenRed}
           options={{ headerShown: false }}
@@ -301,7 +302,51 @@ export default function App() {
               />
             ),
           }}
-        ></Stack.Screen>
+        ></Stack.Screen> */}
+        <Stack.Screen
+          name="OrderPay"
+          component={OrderPay}
+          options={({ navigation }) => ({
+            headerTitle: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Image
+                  source={require("./assets/images/logo.png")}
+                  style={{ width: 33, height: 33 }}
+                />
+                <Text
+                  style={{
+                    fontFamily: "interBlack",
+                    fontStyle: "italic",
+                    fontWeight: "900",
+                    fontSize: 22.5,
+                    color: "#fefefe",
+                    marginLeft: 5,
+                  }}
+                >
+                  CXUE
+                </Text>
+              </View>
+            ),
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image
+                  source={require("./assets/images/btn-back-white.png")}
+                  style={{
+                    width: 7.23 * 1.75,
+                    height: 12.8 * 1.75,
+                    marginLeft: 20,
+                    marginBottom: 2.5,
+                  }}
+                />
+              </TouchableOpacity>
+            ),
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
