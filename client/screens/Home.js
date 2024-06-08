@@ -1,20 +1,77 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import MovieCard from "../components/MovieCard";
 import PagerView from "react-native-pager-view";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-
 
 const Home = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const numPages = 4;
   const navigation = useNavigation();
 
-  const pages = Array(numPages).fill(require("../assets/images/Parasite.jpg"));
-  const handleMovieCardPress = () => {
-    navigation.navigate("MovieDetails");
+  const handleMovieCardPressParasite = () => {
+    navigation.navigate("MovieDetailsParasite");
   };
+
+  const handleMovieCardPressSpiderman = () => {
+    navigation.navigate("MovieDetailsSpiderman");
+  };
+
+  const handleMovieCardPressShinGojira = () => {
+    navigation.navigate("MovieDetailsShinGojira");
+  }
+
+  const handleMovieCardPressBatman = () => {
+    navigation.navigate("MovieDetailsTheBatman");
+  }
+
+  const handleMovieCardPressArray = [
+    handleMovieCardPressParasite,
+    handleMovieCardPressBatman,
+    handleMovieCardPressSpiderman,
+    handleMovieCardPressShinGojira,
+  ];
+
+  const pages = [
+    require("../assets/images/Parasite.jpg"),
+    require("../assets/images/Spiderman.png"),
+    require("../assets/images/Shingojira.png"),
+    require("../assets/images/Batman.jpg"),
+  ];
+
+  const nowShowingMoviePosters = [
+    require("../assets/images/Parasite.jpg"),
+    require("../assets/images/Batman.jpg"),
+    require("../assets/images/Spiderman.png"),
+    require("../assets/images/Shingojira.png"),
+  ];
+
+  const nowShowingMovieName = [
+    "Parasite",
+    "The Batman",
+    "Spiderman",
+    "Shingojira",
+  ];
+
+  const nowShowingMovieDuration = ["2h 11m", "2h 20m", "2h 56m", "2h 0m"];
+
+  const upcomingMoviePosters = [
+    require("../assets/images/IT.png"),
+    require("../assets/images/Joker.png"),
+    require("../assets/images/Midsommar.png"),
+  ];
+
+  const upcomingMovieName = ["IT", "Joker", "Midsommar"];
+
+  const upcomingMovieDuration = ["2h 15m", "2h 2m", "2h 18m"];
+
   return (
     <>
       <ScrollView style={styles.container}>
@@ -23,85 +80,73 @@ const Home = () => {
           initialPage={0}
           onPageSelected={(event) => setPageIndex(event.nativeEvent.position)}
         >
-        {pages.map((page, index) => (
-          <View style={styles.page} key={index + 1}>
-            <Image source={page} style={styles.carouselImage} />
-            <LinearGradient
-              colors={["transparent", "#0D160B"]}
-              locations={[0, 0.9]}
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                bottom: 0,
-                height: 300,
-              }}
-            />
-            <Text style={styles.movieTitle}>Parasite</Text>
-            <Text style={styles.movieRating}>
-              {`iMDb ${(
-                Math.floor(Math.random() * 10) +
-                1 +
-                Math.random()
-              ).toFixed(1)}`}
-            </Text>
-          </View>
-        ))}
-      </PagerView>
-      <View style={styles.dotIndicator}>
-        {Array(numPages)
-          .fill()
-          .map((_, i) => (
-            <View
-              key={i}
-              style={[
-                styles.dot,
-                pageIndex === i ? styles.dotActive : styles.dotInactive,
-              ]}
-            />
+          {pages.map((page, index) => (
+            <View style={styles.page} key={index + 1}>
+              <Image source={page} style={styles.carouselImage} />
+              <LinearGradient
+                colors={["transparent", "#0D160B"]}
+                locations={[0, 0.9]}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: 300,
+                }}
+              />
+              <Text style={styles.movieTitle}>Parasite</Text>
+              <Text style={styles.movieRating}>
+                {`iMDb ${(
+                  Math.floor(Math.random() * 9) +
+                  1 +
+                  Math.random()
+                ).toFixed(1)}`}
+              </Text>
+            </View>
           ))}
-      </View>
-      <View style={styles.movieCardContainer}>
-        <Text style={styles.sectionTitle}>Now Showing</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <MovieCard
-            movieName={"The Batman"}
-            moviePoster={require("../assets/images/Batman.jpg")}
-            movieDuration={"2h 56m"}
-            onPress={handleMovieCardPress}
-          />
-          <MovieCard
-            movieName={"The Batman"}
-            moviePoster={require("../assets/images/Batman.jpg")}
-            movieDuration={"2h 56m"}
-          />
-          <MovieCard
-            movieName={"The Batman"}
-            moviePoster={require("../assets/images/Batman.jpg")}
-            movieDuration={"2h 56m"}
-          />
-        </ScrollView>
-        <Text style={styles.sectionTitle}>Coming Soon</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <MovieCard
-            movieName={"The Batman"}
-            moviePoster={require("../assets/images/Batman.jpg")}
-            movieDuration={"2h 56m"}
-          />
-          <MovieCard
-            movieName={"The Batman"}
-            moviePoster={require("../assets/images/Batman.jpg")}
-            movieDuration={"2h 56m"}
-          />
-          <MovieCard
-            movieName={"The Batman"}
-            moviePoster={require("../assets/images/Batman.jpg")}
-            movieDuration={"2h 56m"}
-          />
-        </ScrollView>
-      </View>
-    </ScrollView>
-    {/* <Navbar /> */}
+        </PagerView>
+        <View style={styles.dotIndicator}>
+          {Array(numPages)
+            .fill()
+            .map((_, i) => (
+              <View
+                key={i}
+                style={[
+                  styles.dot,
+                  pageIndex === i ? styles.dotActive : styles.dotInactive,
+                ]}
+              />
+            ))}
+        </View>
+        <View style={styles.movieCardContainer}>
+          <Text style={styles.sectionTitle}>Now Showing</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {nowShowingMoviePosters.map((nowShowingMoviePoster, index) => (
+              <MovieCard
+                key={index}
+                movieName={nowShowingMovieName[index]}
+                moviePoster={nowShowingMoviePoster}
+                movieDuration={nowShowingMovieDuration[index]}
+                onPress={handleMovieCardPressArray[index]}
+              />
+            ))}
+          </ScrollView>
+          <Text style={styles.sectionTitle}>Coming Soon</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {upcomingMoviePosters.map((upcomingMoviePosters, index) => (
+              <MovieCard
+                key={index}
+                movieName={upcomingMovieName[index]}
+                moviePoster={upcomingMoviePosters}
+                movieDuration={upcomingMovieDuration[index]}
+                onPress={"null"}
+              />
+            ))}
+          </ScrollView>
+        </View>
+        <View style={{ marginBottom: 80 }}></View>
+      </ScrollView>
+      {/* <Navbar /> */}
     </>
   );
 };

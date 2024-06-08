@@ -11,7 +11,10 @@ import DrinkSelection from "./screens/DrinkSelection"; // Import screen baru
 import OnboardingDrink from "./screens/OnboardingDrink"; // Import screen baru with 
 import Navbar from "./components/navbar";
 import Profile from "./screens/profile";
-import MovieDetails from "./screens/MovieDetails";
+import MovieDetailsParasite from "./screens/MovieDetails/MovieDetailsParasite";
+import MovieDetailsSpiderman from "./screens/MovieDetails/MovieDetailsSpiderman";
+import MovieDetailsTheBatman from "./screens/MovieDetails/MovieDetailsTheBatman";
+import MovieDetailsShinGojira from "./screens/MovieDetails/MovieDetailsShingojira";
 import DatenTheaterSelection from "./screens/DatenTheaterSelection";
 import { Image, TouchableOpacity, View, Text } from "react-native";
 import { initializeApp } from "@firebase/app";
@@ -46,7 +49,7 @@ export default function App() {
     //The navigation might need to be changed after the app is fully implemented
     <NavigationContainer>
       <Stack.Navigator>
-         <Stack.Screen
+         {/* <Stack.Screen
           name="LoadingRed"
           component={LoadingScreenRed}
           options={{ headerShown: false }}
@@ -65,7 +68,7 @@ export default function App() {
           name="LoadingWhite"
           component={LoadingScreenWhite}
           options={{ headerShown: false }}
-        /> 
+        />  */}
         <Stack.Screen
           name="Home"
           component={Home}
@@ -93,8 +96,86 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="MovieDetails"
-          component={MovieDetails}
+          name="MovieDetailsParasite"
+          component={MovieDetailsParasite}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 30, height: 30, marginLeft: 160 }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="MovieDetailsShinGojira"
+          component={MovieDetailsShinGojira}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 30, height: 30, marginLeft: 160 }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="MovieDetailsSpiderman"
+          component={MovieDetailsSpiderman}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 20,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 30, height: 30, marginLeft: 160 }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="MovieDetailsTheBatman"
+          component={MovieDetailsTheBatman}
           options={{
             title: "CXUE",
             headerTitleStyle: {
