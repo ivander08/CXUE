@@ -35,29 +35,47 @@ const OrderPay = ({ route, navigation }) => {
   };
 
   const totalPrice = calculateTotalPrice();
-
+  const verifyPrice = totalPrice + 75000;
   return (
     <View style={styles.container}>
       <View style={styles.seatsContainer}>
-        <Text style={styles.seatsHeaderText}>Selected Seats:</Text>
-        {selectedSeats && selectedSeats.length > 0 ? (
+      <View style={styles.containerDrinkHead}>
+        <Text style={styles.headerText}>Parasite</Text>
+        <Text style={styles.headerTextYellow}>Rp. 75.000</Text>
+      </View>
+        <Text style={styles.seatsHead}>Parasite</Text>
+        <View style={styles.seatFirst}>
+          <Text style={styles.seatItemText}>(3x)   E6, F6, G6</Text>
+          <Text style={styles.seatItemText}>10 June</Text>
+        </View>
+        <View style={styles.seatFirst}>
+          <Text style={styles.seatItemText2}>CGV Grand Indonesia • Regular 2D • 20.00 </Text>
+        </View>
+        {/* {selectedSeats && selectedSeats.length > 0 ? (
           <Text style={styles.seatsText}>{selectedSeats.join(', ')}</Text>
         ) : (
           <Text style={styles.seatsText}>No seats selected</Text>
-        )}
-      </View>
-      <Text style={styles.headerText}>Order Summary</Text>
-      {renderCartSummary()}
-      <View style={styles.totalContainer}>
-        <Text style={styles.totalText}>Total Price: Rp {totalPrice.toLocaleString('id-ID')}</Text>
+        )} */}
       </View>
 
+      <View style={styles.containerDrinkHead}>
+        <Text style={styles.headerText}>Drink</Text>
+        <Text style={styles.headerTextYellow}>Rp. {totalPrice.toLocaleString('id-ID')}</Text>
+      </View>
+      {renderCartSummary()}
+      <View style={styles.totalContainer}></View>
+      <View style={styles.containerDrinkHead}>
+        <Text style={styles.headerText}>Total </Text>
+        <Text style={styles.headerTextYellow}>Rp {verifyPrice.toLocaleString('id-ID')}</Text>
+      </View>
+      
       {/* Tombol Verify Payment */}
       <TouchableOpacity
         style={styles.orderSummaryContainer}
-        onPress={() => navigation.navigate('DrinkSelection', { cart })}
+        onPress={() => navigation.navigate('ShowTicket', { cart })}
       >
         <Text style={styles.orderSummaryHead}>Verify Payment</Text>
+        <Text style={styles.orderSummaryContent}>Total: Rp. {verifyPrice.toLocaleString('id-ID')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -72,8 +90,16 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: 'bold',
+    marginTop: 25,
+    marginBottom: 15,
+  },
+  headerTextYellow: {
+    color: '#D8C764',
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginTop: 25,
     marginBottom: 15,
   },
   cartItem: {
@@ -81,23 +107,46 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 10,
   },
+  seatItemText: {
+    color: '#ccc',
+    fontSize: 13,
+  },
+  seatItemText2: {
+    color: '#ccc',
+    fontSize: 16.5,
+  },
   cartItemText: {
-    color: '#fff',
-    fontSize: 16,
+    color: '#ccc',
+    fontSize: 13,
   },
   totalContainer: {
     borderTopWidth: 1,
     borderTopColor: '#fff',
     paddingTop: 10,
     marginTop: 10,
+    marginBottom: -10,
   },
   totalText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
   },
+  seatsHead: {
+    marginTop: -30,
+  },
+  seatFirst: {
+    flexDirection: 'row',
+    justifyContent:'space-between',
+    marginBottom: 10,
+    color: '#ccc'
+  },
   seatsContainer: {
-    marginTop: 20,
+    marginTop: -30,
+  },
+  containerDrinkHead: {
+    flexDirection: 'row',
+    justifyContent:'space-between',
+    marginBottom: 10,
   },
   seatsHeaderText: {
     color: '#fff',
