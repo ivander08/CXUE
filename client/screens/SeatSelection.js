@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import Svg, { Path } from "react-native-svg";
@@ -54,7 +47,7 @@ const SeatSelection = ({ navigation }) => {
   };
 
   const handleSelectSeat = () => {
-    navigation.navigate("OnboardingDrink");
+    navigation.navigate("OrderPay", { cart: {}, selectedSeats }); 
   };
 
   return (
@@ -157,7 +150,7 @@ const SeatSelection = ({ navigation }) => {
       </View>
       <View style={styles.divider} />
       <TouchableOpacity onPress={handleSelectSeat} style={styles.buttonContainer}>
-      <Text style={styles.buttonTitle}>Select Drinks</Text>
+        <Text style={styles.buttonTitle}>Select Drinks</Text>
         <Text style={styles.buttonDescription}>
           {`${selectedSeats.length}x Tickets | ${selectedSeats.join(", ")}`}
         </Text>

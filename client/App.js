@@ -170,7 +170,7 @@ export default function App() {
               />
             ),
           }}
-        />
+        /> */}
         <Stack.Screen
           name="DatenTheaterSelection"
           component={DatenTheaterSelection}
@@ -222,7 +222,7 @@ export default function App() {
               />
             ),
           }}
-        ></Stack.Screen> */}
+        ></Stack.Screen>
         <Stack.Screen 
           name="OnboardingDrink" 
           component={OnboardingDrink} // Tambahkan screen baru ke dalam stack navigator

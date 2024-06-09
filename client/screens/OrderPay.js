@@ -1,13 +1,12 @@
-// OrderPay.js
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { drinks } from './DrinkSelection'; // Adjust the path if necessary
+import { drinks } from '../screens/DrinkSelection'; // Adjust the path if necessary
 
 // Get the screen dimensions
 const { width } = Dimensions.get('window');
 
 const OrderPay = ({ route }) => {
-  const { cart } = route.params;
+  const { cart, selectedSeats } = route.params;
 
   const calculateTotalPrice = () => {
     return Object.entries(cart).reduce((total, [id, count]) => {
@@ -39,6 +38,14 @@ const OrderPay = ({ route }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.seatsContainer}>
+        <Text style={styles.seatsHeaderText}>Selected Seats:</Text>
+        {selectedSeats && selectedSeats.length > 0 ? (
+          <Text style={styles.seatsText}>{selectedSeats.join(', ')}</Text>
+        ) : (
+          <Text style={styles.seatsText}>No seats selected</Text>
+        )}
+      </View>
       <Text style={styles.headerText}>Order Summary</Text>
       {renderCartSummary()}
       <View style={styles.totalContainer}>
@@ -80,6 +87,19 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  seatsContainer: {
+    marginTop: 20,
+  },
+  seatsHeaderText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  seatsText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
