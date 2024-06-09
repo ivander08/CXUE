@@ -44,7 +44,11 @@ const MovieDetailsShinGojira = ({ navigation }) => {
             <Text style={styles.transparentBoxText}>SUB INDO</Text>
           </View>
           <View style={styles.ratingBoxItem}>
-            <Text style={styles.ratingBoxText}>iMDb 8.5</Text>
+            <Text style={styles.ratingBoxText}>{`iMDb ${(
+              Math.floor(Math.random() * 9) +
+              1 +
+              Math.random()
+            ).toFixed(1)}`}</Text>
           </View>
         </View>
       </View>
