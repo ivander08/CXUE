@@ -9,15 +9,15 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const MovieDetailsParasite = ({ navigation }) => {
+const MovieDetailsIT = ({ navigation }) => {
   const handleTickets = () => {
-    navigation.navigate('DatenTheaterSelection');
-  }
+    navigation.navigate("DatenTheaterSelection");
+  };
   return (
     <ScrollView style={styles.container}>
       <View style={styles.page}>
         <Image
-          source={require("../../assets/images/Parasite.jpg")}
+          source={require("../../assets/images/IT.png")}
           style={styles.movieImage}
         />
         <LinearGradient
@@ -31,14 +31,14 @@ const MovieDetailsParasite = ({ navigation }) => {
             height: 300,
           }}
         />
-        <Text style={styles.movieTitle}>Parasite</Text>
-        <Text style={styles.movieDetails}>Horror • Thriller • 2h 11m</Text>
+        <Text style={styles.movieTitle}>IT</Text>
+        <Text style={styles.movieDetails}>Horror • Thriller • 2h 15m</Text>
         <View style={styles.box}>
           <View style={styles.boxItem}>
             <Text style={styles.boxText}> R </Text>
           </View>
           <View style={styles.transparentBoxItem}>
-            <Text style={styles.transparentBoxText}>KOR</Text>
+            <Text style={styles.transparentBoxText}>ENG</Text>
           </View>
           <View style={styles.transparentBoxItem}>
             <Text style={styles.transparentBoxText}>SUB INDO</Text>
@@ -48,26 +48,23 @@ const MovieDetailsParasite = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleTickets}>
-          <Text style={styles.buttonText}>Buy tickets</Text>
-        </TouchableOpacity>
-      </View>
       <View style={styles.line}></View>
       <View style={styles.synopsisSection}>
         <Text style={styles.synopsisTitleText}>Synopsis</Text>
         <Text style={styles.synopsisText}>
-          "Parasite" is a South Korean dark comedy thriller directed by Bong
-          Joon-ho that follows the impoverished Kim family as they scheme to
-          infiltrate and manipulate the wealthy Park family. By securing various
-          household positions through deception, each Kim family member takes on
-          a different role within the Park household. The film intricately
-          explores themes of social inequality, greed, and class struggle,
-          ultimately culminating in a violent and tragic climax that exposes the
-          deep-rooted tensions between the affluent and the poor. "Parasite" is
-          lauded for its sharp social commentary, masterful storytelling, and
-          has received numerous accolades, including the Palme d'Or and multiple
-          Academy Awards, notably Best Picture.
+          4/4 ChatGPT "It" is a horror thriller directed by Andy Muschietti,
+          based on Stephen King's novel. The film follows a group of children,
+          known as the Losers' Club, in the small town of Derry, who are
+          terrorized by a malevolent entity that takes the form of a clown named
+          Pennywise. As they uncover the truth about Pennywise and his
+          connection to a series of child disappearances spanning decades, the
+          kids must confront their deepest fears to defeat the evil force. "It"
+          masterfully blends supernatural horror with a coming-of-age story,
+          highlighting themes of friendship, trauma, and courage. The film
+          received critical acclaim for its performances, particularly Bill
+          Skarsgård as Pennywise, its atmospheric tension, and its faithful
+          adaptation of the source material, becoming a box office success and a
+          modern horror classic.
         </Text>
       </View>
     </ScrollView>
@@ -186,4 +183,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MovieDetailsParasite;
+export default MovieDetailsIT;

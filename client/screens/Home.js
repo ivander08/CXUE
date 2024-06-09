@@ -32,11 +32,29 @@ const Home = () => {
     navigation.navigate("MovieDetailsTheBatman");
   }
 
+  const MovieDetailsIT = () => {
+    navigation.navigate("MovieDetailsIT");
+  }
+
+  const MovieDetailsJoker = () => {
+    navigation.navigate("MovieDetailsJoker");
+  }
+
+  const MovieDetailsMidsommar = () => {
+    navigation.navigate("MovieDetailsMidsommar");
+  }
+
   const handleMovieCardPressArray = [
     handleMovieCardPressParasite,
     handleMovieCardPressBatman,
     handleMovieCardPressSpiderman,
     handleMovieCardPressShinGojira,
+  ];
+
+  const handleMovieCardPressArrayUpcoming = [
+    MovieDetailsIT,
+    MovieDetailsJoker,
+    MovieDetailsMidsommar,
   ];
 
   const pages = [
@@ -139,7 +157,7 @@ const Home = () => {
                 movieName={upcomingMovieName[index]}
                 moviePoster={upcomingMoviePosters}
                 movieDuration={upcomingMovieDuration[index]}
-                onPress={"null"}
+                onPress={handleMovieCardPressArrayUpcoming[index]}
               />
             ))}
           </ScrollView>

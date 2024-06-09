@@ -17,6 +17,9 @@ import MovieDetailsParasite from "./screens/MovieDetails/MovieDetailsParasite";
 import MovieDetailsSpiderman from "./screens/MovieDetails/MovieDetailsSpiderman";
 import MovieDetailsTheBatman from "./screens/MovieDetails/MovieDetailsTheBatman";
 import MovieDetailsShinGojira from "./screens/MovieDetails/MovieDetailsShingojira";
+import MovieDetailsIT from "./screens/MovieDetails/MovieDetailsIT";
+import MovieDetailsJoker from "./screens/MovieDetails/MovieDetailsJoker";
+import MovieDetailsMidsommar from "./screens/MovieDetails/MovieDetailsMidsommar";
 import DatenTheaterSelection from "./screens/DatenTheaterSelection";
 import OrderPay from "./screens/OrderPay";
 import SeatSelection from "./screens/SeatSelection";
@@ -204,6 +207,84 @@ export default function App() {
         <Stack.Screen
           name="MovieDetailsTheBatman"
           component={MovieDetailsTheBatman}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 22.5,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="MovieDetailsIT"
+          component={MovieDetailsIT}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 22.5,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="MovieDetailsJoker"
+          component={MovieDetailsJoker}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 22.5,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="MovieDetailsMidsommar"
+          component={MovieDetailsMidsommar}
           options={{
             title: "CXUE",
             headerTitleStyle: {
