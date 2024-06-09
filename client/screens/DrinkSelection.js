@@ -6,14 +6,12 @@ const { width } = Dimensions.get('window');
 const imageWidth = width * 0.325;  // 32.5% of screen width
 const imageHeight = imageWidth * 1.25;  // Maintain aspect ratio
 
-const drinks = [
+export const drinks = [
   { id: '1', name: 'Fresh-Squeezed Lemonade', price: 'Rp 10,000', image: require('../assets/images/lemonade.png') },
   { id: '2', name: 'Original Jasmine Tea', price: 'Rp 10,000', image: require('../assets/images/jasmine_tea.png') },
   { id: '3', name: 'Mango Smoothie', price: 'Rp 16,000', image: require('../assets/images/mango_smoothie.png') },
   { id: '4', name: 'Bubble Milk Tea', price: 'Rp 18,000', image: require('../assets/images/bubble_milk_tea.png') },
-  { id: '5', name: 'Bubble Milk Tea', price: 'Rp 18,000', image: require('../assets/images/bubble_milk_tea.png') },
-  { id: '6', name: 'Bubble Milk Tea', price: 'Rp 18,000', image: require('../assets/images/bubble_milk_tea.png') },
-  { id: '7', name: 'Bubble Milk Tea', price: 'Rp 18,000', image: require('../assets/images/bubble_milk_tea.png') },
+  { id: '5', name: 'Bubble Milk', price: 'Rp 15,000', image: require('../assets/images/bubble_milk_tea.png') },
 ];
 
 const DrinkItem = ({ item, cart, addToCart, removeFromCart }) => {
@@ -45,7 +43,7 @@ const DrinkItem = ({ item, cart, addToCart, removeFromCart }) => {
   );
 };
 
-const DrinkList = () => {
+const DrinkList = ({ navigation }) => {
   const [cart, setCart] = useState({});
 
   const addToCart = (item) => {
@@ -91,10 +89,13 @@ const DrinkList = () => {
         keyExtractor={(item) => item.id}
       />
       {Object.keys(cart).length > 0 && (
-        <View style={styles.orderSummaryContainer}>
+        <TouchableOpacity
+          style={styles.orderSummaryContainer}
+          onPress={() => navigation.navigate('OrderPay', { cart })}
+        >
           <Text style={styles.orderSummaryHead}>Order Summary</Text>
           <Text style={styles.orderSummaryContent}>{renderCartSummary()}</Text>
-        </View>
+        </TouchableOpacity>
       )}
     </View>
   );

@@ -16,9 +16,6 @@ const App = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate('DrinkSelection')}>
           <Image source={buttonImage} style={styles.button} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('OrderSummary')}>
-          <Text style={styles.warningText}>Skip? Go to Order Summary</Text>
-        </TouchableOpacity>
       </ImageBackground>
     </View>
   );

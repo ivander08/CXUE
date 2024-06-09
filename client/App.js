@@ -1,7 +1,9 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Image, TouchableOpacity, View, Text } from "react-native";
 import { useFonts } from "expo-font";
+import { initializeApp } from "@firebase/app";
 import LoadingScreenRed from "./screens/LoadingScreenRed";
 import LoadingScreenWhite from "./screens/LoadingScreenWhite";
 import Register from "./screens/auth/Register";
@@ -16,8 +18,7 @@ import MovieDetailsSpiderman from "./screens/MovieDetails/MovieDetailsSpiderman"
 import MovieDetailsTheBatman from "./screens/MovieDetails/MovieDetailsTheBatman";
 import MovieDetailsShinGojira from "./screens/MovieDetails/MovieDetailsShingojira";
 import DatenTheaterSelection from "./screens/DatenTheaterSelection";
-import { Image, TouchableOpacity, View, Text } from "react-native";
-import { initializeApp } from "@firebase/app";
+import OrderPay from "./screens/OrderPay";
 import SeatSelection from "./screens/SeatSelection";
 import ShowTicket from "./screens/ShowTicket";
 
@@ -50,7 +51,7 @@ export default function App() {
     //The navigation might need to be changed after the app is fully implemented
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="LoadingRed"
           component={LoadingScreenRed}
           options={{ headerShown: false }}
@@ -69,7 +70,7 @@ export default function App() {
           name="LoadingWhite"
           component={LoadingScreenWhite}
           options={{ headerShown: false }}
-        />  */}
+        /> 
         <Stack.Screen
           name="Home"
           component={Home}
@@ -79,7 +80,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 39,
             },
@@ -91,7 +92,7 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
@@ -105,7 +106,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 39,
             },
@@ -117,7 +118,7 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
@@ -131,7 +132,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 39,
             },
@@ -143,7 +144,7 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
@@ -169,7 +170,7 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
@@ -183,7 +184,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 39,
             },
@@ -195,7 +196,7 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
@@ -209,7 +210,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 39,
             },
@@ -221,7 +222,7 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
@@ -235,7 +236,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 30,
             },
@@ -247,7 +248,7 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
@@ -261,7 +262,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 39,
             },
@@ -273,11 +274,11 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
-        />
+        /> 
         <Stack.Screen
           name="DatenTheaterSelection"
           component={DatenTheaterSelection}
@@ -287,7 +288,7 @@ export default function App() {
               fontFamily: "interBlack",
               fontStyle: "italic",
               fontWeight: "bold",
-              fontSize: 20,
+              fontSize: 22.5,
               color: "white",
               marginLeft: 39,
             },
@@ -299,7 +300,33 @@ export default function App() {
             headerLeft: () => (
               <Image
                 source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
+              />
+            ),
+          }}  
+        ></Stack.Screen>
+        <Stack.Screen
+          name="SeatSelection"
+          component={SeatSelection}
+          options={{
+            title: "CXUE",
+            headerTitleStyle: {
+              fontFamily: "interBlack",
+              fontStyle: "italic",
+              fontWeight: "bold",
+              fontSize: 22.5,
+              color: "white",
+              marginLeft: 39,
+            },
+            headerTitleAlign: "center",
+            headerTransparent: true,
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+            headerLeft: () => (
+              <Image
+                source={require("./assets/images/logo.png")}
+                style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
           }}
@@ -385,31 +412,49 @@ export default function App() {
           })}
         />
         <Stack.Screen
-          name="SeatSelection"
-          component={SeatSelection}
-          options={{
-            title: "CXUE",
-            headerTitleStyle: {
-              fontFamily: "interBlack",
-              fontStyle: "italic",
-              fontWeight: "bold",
-              fontSize: 20,
-              color: "white",
-              marginLeft: 39,
-            },
+          name="OrderPay"
+          component={OrderPay}
+          options={({ navigation }) => ({
+            headerTitle: () => (
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Image
+                  source={require("./assets/images/logo.png")}
+                  style={{ width: 33, height: 33 }}
+                />
+                <Text
+                  style={{
+                    fontFamily: "interBlack",
+                    fontStyle: "italic",
+                    fontWeight: "900",
+                    fontSize: 22.5,
+                    color: "#fefefe",
+                    marginLeft: 5,
+                  }}
+                >
+                  CXUE
+                </Text>
+              </View>
+            ),
             headerTitleAlign: "center",
             headerTransparent: true,
             headerStyle: {
               backgroundColor: "transparent",
             },
             headerLeft: () => (
-              <Image
-                source={require("./assets/images/logo.png")}
-                style={{ width: 30, height: 30, marginLeft: 160 }}
-              />
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image
+                  source={require("./assets/images/btn-back-white.png")}
+                  style={{
+                    width: 7.23 * 1.75,
+                    height: 12.8 * 1.75,
+                    marginLeft: 20,
+                    marginBottom: 2.5,
+                  }}
+                />
+              </TouchableOpacity>
             ),
-          }}
-        ></Stack.Screen>
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
