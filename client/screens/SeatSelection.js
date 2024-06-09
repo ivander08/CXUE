@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import Svg, { Path } from "react-native-svg";
 
-const SeatSelection = ({ navigation }) => {
+const SeatSelection = ({ route, navigation }) => {
+  const { cinemaName, showtimeType, time, selectedDay } = route.params;
   const [selectedSeats, setSelectedSeats] = useState([]);
 
   const [seats, setSeats] = useState([
@@ -13,21 +21,21 @@ const SeatSelection = ({ navigation }) => {
       .map(() =>
         Array(4)
           .fill()
-          .map(() => ({ selected: false }))
+          .map(() => ({ selected: false, price: 25000 }))
       ),
     Array(9)
       .fill()
       .map(() =>
         Array(5)
           .fill()
-          .map(() => ({ selected: false }))
+          .map(() => ({ selected: false, price: 25000 }))
       ),
     Array(9)
       .fill()
       .map(() =>
         Array(4)
           .fill()
-          .map(() => ({ selected: false }))
+          .map(() => ({ selected: false, price: 25000 }))
       ),
   ]);
   const handleSeatSelect = (groupIndex, rowIndex, seatIndex) => {
@@ -35,25 +43,42 @@ const SeatSelection = ({ navigation }) => {
     newSeats[groupIndex][rowIndex][seatIndex].selected =
       !newSeats[groupIndex][rowIndex][seatIndex].selected;
 
-    // Calculate total seats in all previous groups
     const totalSeatsInPreviousGroups = seats
       .slice(0, groupIndex)
       .reduce((total, group) => total + group[0].length, 0);
 
-    // Calculate seat number across groups
     const seatNumber = totalSeatsInPreviousGroups + seatIndex + 1;
 
     const seatLabel = `${String.fromCharCode(65 + rowIndex)}${seatNumber}`; // Rows are labeled with letters, seats are labeled with numbers
     if (newSeats[groupIndex][rowIndex][seatIndex].selected) {
-      setSelectedSeats([...selectedSeats, seatLabel]);
+      setSelectedSeats([
+        ...selectedSeats,
+        {
+          label: seatLabel,
+          price: newSeats[groupIndex][rowIndex][seatIndex].price,
+        },
+      ]);
     } else {
-      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatLabel));
+      setSelectedSeats(
+        selectedSeats.filter((seat) => seat.label !== seatLabel)
+      );
     }
     setSeats(newSeats);
   };
 
   const handleSelectSeat = () => {
-    navigation.navigate("OnboardingDrink", { cart: {}, selectedSeats }); 
+    const totalPrice = selectedSeats.reduce(
+      (total, seat) => total + seat.price,
+      0
+    );
+    navigation.navigate("OnboardingDrink", {
+      selectedSeats,
+      totalPrice,
+      cinemaName,
+      showtimeType,
+      time,
+      selectedDay,
+    });
   };
 
   return (
@@ -162,10 +187,15 @@ const SeatSelection = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.divider} />
-      <TouchableOpacity onPress={handleSelectSeat} style={styles.buttonContainer}>
+      <TouchableOpacity
+        onPress={handleSelectSeat}
+        style={styles.buttonContainer}
+      >
         <Text style={styles.buttonTitle}>Select Drinks</Text>
         <Text style={styles.buttonDescription}>
-          {`${selectedSeats.length}x Tickets | ${selectedSeats.join(", ")}`}
+          {`${selectedSeats.length}x Tickets | ${selectedSeats
+            .map((seat) => seat.label)
+            .join(", ")}`}
         </Text>
       </TouchableOpacity>
     </ScrollView>

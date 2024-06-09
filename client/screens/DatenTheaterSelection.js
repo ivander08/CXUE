@@ -81,8 +81,8 @@ const DatenTheaterSelection = ({ navigation }) => {
   ]);
 
   const selectTime = (cinemaIndex, showtimeIndex, timeIndex) => {
-    setCinemas(
-      cinemas.map((cinema, i) => {
+    setCinemas((prevCinemas) =>
+      prevCinemas.map((cinema, i) => {
         if (i === cinemaIndex) {
           return {
             ...cinema,
@@ -91,14 +91,20 @@ const DatenTheaterSelection = ({ navigation }) => {
                 return {
                   ...showtime,
                   times: showtime.times.map((time, k) => {
-                    if (k === timeIndex) {
-                      return { ...time, isSelected: true };
-                    }
-                    return { ...time, isSelected: false };
+                    return {
+                      ...time,
+                      isSelected: k === timeIndex ? true : false,
+                    };
                   }),
                 };
               }
-              return showtime;
+              return {
+                ...showtime,
+                times: showtime.times.map((time) => ({
+                  ...time,
+                  isSelected: false,
+                })),
+              };
             }),
           };
         }
@@ -109,7 +115,32 @@ const DatenTheaterSelection = ({ navigation }) => {
   };
 
   const handleBuyTickets = () => {
-    navigation.navigate("SeatSelection");
+    if (selectedCinema !== null) {
+      const selectedShowtime = cinemas[selectedCinema].showtimes.find(
+        (showtime) => showtime.times.some((time) => time.isSelected)
+      );
+
+      if (selectedShowtime) {
+        const selectedTime = selectedShowtime.times.find(
+          (time) => time.isSelected
+        );
+
+        if (selectedTime) {
+          navigation.navigate("SeatSelection", {
+            cinemaName: cinemas[selectedCinema].name,
+            showtimeType: selectedShowtime.type,
+            time: selectedTime.time,
+            selectedDay: formatDate(selectedDay),
+          });
+        } else {
+          alert("Please select a time.");
+        }
+      } else {
+        alert("Please select a showtime.");
+      }
+    } else {
+      alert("Please select a cinema.");
+    }
   };
 
   const [collapsedStates, setCollapsedStates] = useState(
@@ -153,15 +184,27 @@ const DatenTheaterSelection = ({ navigation }) => {
     return `${weekday} ${day} ${month}`;
   };
 
-  const getCurrentTime = () => {
+  const isTimePast = (selectedDate, timeString) => {
     const now = new Date();
-    return now.getHours() * 60 + now.getMinutes();
-  };
+    const selectedDateTime = new Date(selectedDate);
 
-  const isTimePast = (timeString) => {
+    // Check if the selected date is in the future
+    if (selectedDateTime > now) {
+      return false; // If the selected date is in the future, the time cannot be past
+    }
+
+    let currentTime = now.getHours() * 60 + now.getMinutes();
+
+    // Adjusting for selected day
+    if (now.getDate() !== selectedDateTime.getDate()) {
+      currentTime += 24 * 60;
+    }
+
     const [hours, minutes] = timeString.split(":").map(Number);
     const timeInMinutes = hours * 60 + minutes;
-    return timeInMinutes <= getCurrentTime();
+
+    // Check if the current time is greater than or equal to the showtime
+    return currentTime >= timeInMinutes;
   };
 
   return (
@@ -220,7 +263,6 @@ const DatenTheaterSelection = ({ navigation }) => {
                 ]}
                 onPress={() => {
                   setSelectedDay(day);
-                  // console.log(`Ticket for ${formatDate(day)}`);
                 }}
               >
                 <Text
@@ -297,7 +339,7 @@ const DatenTheaterSelection = ({ navigation }) => {
                         showsHorizontalScrollIndicator={false}
                       >
                         {showtime.times.map((time, timeIndex) => {
-                          const isPast = isTimePast(time.time);
+                          const isPast = isTimePast(selectedDay, time.time);
                           return (
                             <TouchableOpacity
                               key={timeIndex}
@@ -338,7 +380,10 @@ const DatenTheaterSelection = ({ navigation }) => {
               </View>
             ))}
             <View style={styles.divider} />
-            <TouchableOpacity onPress={handleBuyTickets} style={styles.buttonContainer}>
+            <TouchableOpacity
+              onPress={handleBuyTickets}
+              style={styles.buttonContainer}
+            >
               <Text style={styles.buttonTitle}>Buy Tickets</Text>
               {selectedCinema !== null &&
                 cinemas[selectedCinema].showtimes.map(
@@ -551,19 +596,19 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   buttonContainer: {
-    backgroundColor: '#FF1F1F',
+    backgroundColor: "#FF1F1F",
     padding: 10,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonTitle: {
-    fontFamily: 'inter',
-    color: 'white',
+    fontFamily: "inter",
+    color: "white",
     fontSize: 17,
   },
   buttonDescription: {
-    fontFamily: 'interExtraLight',
-    color: 'white',
+    fontFamily: "interExtraLight",
+    color: "white",
     fontSize: 12,
     marginTop: 5,
   },

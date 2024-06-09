@@ -1,18 +1,39 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import { drinks } from '../screens/DrinkSelection'; // Sesuaikan path jika diperlukan
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+import { drinks } from "../screens/DrinkSelection"; // Sesuaikan path jika diperlukan
 
 // Dapatkan dimensi layar
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 const OrderPay = ({ route, navigation }) => {
-  const { cart, selectedSeats } = route.params;
+  const {
+    cart,
+    cinemaName,
+    selectedDay,
+    selectedSeats,
+    showtimeType,
+    time,
+    totalPrice,
+  } = route.params;
+
+  const seatLabels = selectedSeats.map(seat => seat.label).join(', ');
+
+  const seatCount = selectedSeats.length;
 
   const calculateTotalPrice = () => {
     return Object.entries(cart).reduce((total, [id, count]) => {
       const drink = drinks.find((item) => item.id === id);
       if (drink) {
-        const price = parseInt(drink.price.replace('Rp ', '').replace(',', ''), 10);
+        const price = parseInt(
+          drink.price.replace("Rp ", "").replace(",", ""),
+          10
+        );
         return total + price * count;
       }
       return total;
@@ -25,8 +46,16 @@ const OrderPay = ({ route, navigation }) => {
       if (drink) {
         return (
           <View key={id} style={styles.cartItem}>
-            <Text style={styles.cartItemText}>{count}x {drink.name}</Text>
-            <Text style={styles.cartItemText}>Rp {(parseInt(drink.price.replace('Rp ', '').replace(',', ''), 10) * count).toLocaleString('id-ID')}</Text>
+            <Text style={styles.cartItemText}>
+              {count}x {drink.name}
+            </Text>
+            <Text style={styles.cartItemText}>
+              Rp{" "}
+              {(
+                parseInt(drink.price.replace("Rp ", "").replace(",", ""), 10) *
+                count
+              ).toLocaleString("id-ID")}
+            </Text>
           </View>
         );
       }
@@ -34,48 +63,53 @@ const OrderPay = ({ route, navigation }) => {
     });
   };
 
-  const totalPrice = calculateTotalPrice();
-  const verifyPrice = totalPrice + 75000;
+  const drinksTotalPrice = calculateTotalPrice();
+  const finalTotalPrice = totalPrice + drinksTotalPrice;
   return (
     <View style={styles.container}>
       <View style={styles.seatsContainer}>
-      <View style={styles.containerDrinkHead}>
-        <Text style={styles.headerText}>Parasite</Text>
-        <Text style={styles.headerTextYellow}>Rp. 75.000</Text>
-      </View>
-        <Text style={styles.seatsHead}>Parasite</Text>
+        <View style={styles.containerDrinkHead}>
+          <Text style={styles.headerText}>Movie Ticket</Text>
+          <Text style={styles.headerTextYellow}>
+            Rp. {totalPrice.toLocaleString("id-ID")}
+          </Text>
+        </View>
+        <Text style={styles.seatsHead}></Text>
         <View style={styles.seatFirst}>
-          <Text style={styles.seatItemText}>(3x)   E6, F6, G6</Text>
-          <Text style={styles.seatItemText}>10 June</Text>
+          <Text style={styles.seatItemText}>({seatCount}x) {seatLabels}</Text>
+          <Text style={styles.seatItemText}>{selectedDay}</Text>
         </View>
         <View style={styles.seatFirst}>
-          <Text style={styles.seatItemText2}>CGV Grand Indonesia • Regular 2D • 20.00 </Text>
+          <Text style={styles.seatItemText2}>
+            {cinemaName} • {showtimeType} • {time}
+          </Text>
         </View>
-        {/* {selectedSeats && selectedSeats.length > 0 ? (
-          <Text style={styles.seatsText}>{selectedSeats.join(', ')}</Text>
-        ) : (
-          <Text style={styles.seatsText}>No seats selected</Text>
-        )} */}
       </View>
 
       <View style={styles.containerDrinkHead}>
         <Text style={styles.headerText}>Drink</Text>
-        <Text style={styles.headerTextYellow}>Rp. {totalPrice.toLocaleString('id-ID')}</Text>
+        <Text style={styles.headerTextYellow}>
+          Rp. {drinksTotalPrice.toLocaleString("id-ID")}
+        </Text>
       </View>
       {renderCartSummary()}
       <View style={styles.totalContainer}></View>
       <View style={styles.containerDrinkHead}>
         <Text style={styles.headerText}>Total </Text>
-        <Text style={styles.headerTextYellow}>Rp {verifyPrice.toLocaleString('id-ID')}</Text>
+        <Text style={styles.headerTextYellow}>
+          Rp {finalTotalPrice.toLocaleString("id-ID")}
+        </Text>
       </View>
-      
+
       {/* Tombol Verify Payment */}
       <TouchableOpacity
         style={styles.orderSummaryContainer}
-        onPress={() => navigation.navigate('ShowTicket', { cart })}
+        onPress={() => navigation.navigate("ShowTicket", { cart })}
       >
         <Text style={styles.orderSummaryHead}>Verify Payment</Text>
-        <Text style={styles.orderSummaryContent}>Total: Rp. {verifyPrice.toLocaleString('id-ID')}</Text>
+        <Text style={styles.orderSummaryContent}>
+          Total: Rp. {finalTotalPrice.toLocaleString("id-ID")}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -84,101 +118,101 @@ const OrderPay = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0D160B',
+    backgroundColor: "#0D160B",
     paddingTop: 85,
     paddingHorizontal: 20,
   },
   headerText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 26,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 25,
     marginBottom: 15,
   },
   headerTextYellow: {
-    color: '#D8C764',
+    color: "#D8C764",
     fontSize: 26,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 25,
     marginBottom: 15,
   },
   cartItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 10,
   },
   seatItemText: {
-    color: '#ccc',
+    color: "#ccc",
     fontSize: 13,
   },
   seatItemText2: {
-    color: '#ccc',
+    color: "#ccc",
     fontSize: 16.5,
   },
   cartItemText: {
-    color: '#ccc',
+    color: "#ccc",
     fontSize: 13,
   },
   totalContainer: {
     borderTopWidth: 1,
-    borderTopColor: '#fff',
+    borderTopColor: "#fff",
     paddingTop: 10,
     marginTop: 10,
     marginBottom: -10,
   },
   totalText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   seatsHead: {
     marginTop: -30,
   },
   seatFirst: {
-    flexDirection: 'row',
-    justifyContent:'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 10,
-    color: '#ccc'
+    color: "#ccc",
   },
   seatsContainer: {
     marginTop: -30,
   },
   containerDrinkHead: {
-    flexDirection: 'row',
-    justifyContent:'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 10,
   },
   seatsHeaderText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   seatsText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
   orderSummaryContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
     borderRadius: 7,
-    backgroundColor: '#FF1F1F',
+    backgroundColor: "#FF1F1F",
     marginVertical: 20,
     marginHorizontal: 20,
     paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   orderSummaryHead: {
-    color: '#fefefe',
+    color: "#fefefe",
     fontSize: 16,
-    fontWeight: '900',
+    fontWeight: "900",
   },
   orderSummaryContent: {
-    color: '#fefefe',
-    textAlign: 'center',
+    color: "#fefefe",
+    textAlign: "center",
     opacity: 0.8,
     fontSize: 10.75,
     marginTop: 3.5,
