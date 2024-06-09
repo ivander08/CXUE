@@ -109,7 +109,32 @@ const DatenTheaterSelection = ({ navigation }) => {
   };
 
   const handleBuyTickets = () => {
-    navigation.navigate("SeatSelection");
+    if (selectedCinema !== null) {
+      const selectedShowtime = cinemas[selectedCinema].showtimes.find(
+        (showtime) => showtime.times.some((time) => time.isSelected)
+      );
+
+      if (selectedShowtime) {
+        const selectedTime = selectedShowtime.times.find(
+          (time) => time.isSelected
+        );
+
+        if (selectedTime) {
+          navigation.navigate("SeatSelection", {
+            cinemaName: cinemas[selectedCinema].name,
+            showtimeType: selectedShowtime.type,
+            time: selectedTime.time,
+            selectedDay: formatDate(selectedDay),
+          });
+        } else {
+          alert("Please select a time.");
+        }
+      } else {
+        alert("Please select a showtime.");
+      }
+    } else {
+      alert("Please select a cinema.");
+    }
   };
 
   const [collapsedStates, setCollapsedStates] = useState(
@@ -338,7 +363,10 @@ const DatenTheaterSelection = ({ navigation }) => {
               </View>
             ))}
             <View style={styles.divider} />
-            <TouchableOpacity onPress={handleBuyTickets} style={styles.buttonContainer}>
+            <TouchableOpacity
+              onPress={handleBuyTickets}
+              style={styles.buttonContainer}
+            >
               <Text style={styles.buttonTitle}>Buy Tickets</Text>
               {selectedCinema !== null &&
                 cinemas[selectedCinema].showtimes.map(
@@ -551,19 +579,19 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   buttonContainer: {
-    backgroundColor: '#FF1F1F',
+    backgroundColor: "#FF1F1F",
     padding: 10,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonTitle: {
-    fontFamily: 'inter',
-    color: 'white',
+    fontFamily: "inter",
+    color: "white",
     fontSize: 17,
   },
   buttonDescription: {
-    fontFamily: 'interExtraLight',
-    color: 'white',
+    fontFamily: "interExtraLight",
+    color: "white",
     fontSize: 12,
     marginTop: 5,
   },
