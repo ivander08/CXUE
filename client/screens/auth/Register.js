@@ -44,7 +44,6 @@ const Register = ({ navigation }) => {
       })
       .then(() => {
         const user = auth.currentUser;
-        console.log(user.displayName);
         navigation.navigate("Login");
       })
       .catch((error) => {

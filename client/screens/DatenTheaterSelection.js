@@ -81,8 +81,8 @@ const DatenTheaterSelection = ({ navigation }) => {
   ]);
 
   const selectTime = (cinemaIndex, showtimeIndex, timeIndex) => {
-    setCinemas(
-      cinemas.map((cinema, i) => {
+    setCinemas((prevCinemas) =>
+      prevCinemas.map((cinema, i) => {
         if (i === cinemaIndex) {
           return {
             ...cinema,
@@ -91,14 +91,20 @@ const DatenTheaterSelection = ({ navigation }) => {
                 return {
                   ...showtime,
                   times: showtime.times.map((time, k) => {
-                    if (k === timeIndex) {
-                      return { ...time, isSelected: true };
-                    }
-                    return { ...time, isSelected: false };
+                    return {
+                      ...time,
+                      isSelected: k === timeIndex ? true : false,
+                    };
                   }),
                 };
               }
-              return showtime;
+              return {
+                ...showtime,
+                times: showtime.times.map((time) => ({
+                  ...time,
+                  isSelected: false,
+                })),
+              };
             }),
           };
         }
@@ -178,15 +184,27 @@ const DatenTheaterSelection = ({ navigation }) => {
     return `${weekday} ${day} ${month}`;
   };
 
-  const getCurrentTime = () => {
+  const isTimePast = (selectedDate, timeString) => {
     const now = new Date();
-    return now.getHours() * 60 + now.getMinutes();
-  };
+    const selectedDateTime = new Date(selectedDate);
 
-  const isTimePast = (timeString) => {
+    // Check if the selected date is in the future
+    if (selectedDateTime > now) {
+      return false; // If the selected date is in the future, the time cannot be past
+    }
+
+    let currentTime = now.getHours() * 60 + now.getMinutes();
+
+    // Adjusting for selected day
+    if (now.getDate() !== selectedDateTime.getDate()) {
+      currentTime += 24 * 60;
+    }
+
     const [hours, minutes] = timeString.split(":").map(Number);
     const timeInMinutes = hours * 60 + minutes;
-    return timeInMinutes <= getCurrentTime();
+
+    // Check if the current time is greater than or equal to the showtime
+    return currentTime >= timeInMinutes;
   };
 
   return (
@@ -245,7 +263,6 @@ const DatenTheaterSelection = ({ navigation }) => {
                 ]}
                 onPress={() => {
                   setSelectedDay(day);
-                  // console.log(`Ticket for ${formatDate(day)}`);
                 }}
               >
                 <Text
@@ -322,7 +339,7 @@ const DatenTheaterSelection = ({ navigation }) => {
                         showsHorizontalScrollIndicator={false}
                       >
                         {showtime.times.map((time, timeIndex) => {
-                          const isPast = isTimePast(time.time);
+                          const isPast = isTimePast(selectedDay, time.time);
                           return (
                             <TouchableOpacity
                               key={timeIndex}
