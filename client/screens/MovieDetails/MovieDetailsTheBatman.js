@@ -9,18 +9,17 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const MovieDetails = ({ navigation }) => {
+const MovieDetailsTheBatman = ({ navigation }) => {
   const handleTickets = () => {
-    navigation.navigate('DatenTheaterSelection');
-  }
+    navigation.navigate("DatenTheaterSelection");
+  };
   return (
     <ScrollView style={styles.container}>
       <View style={styles.page}>
         <Image
-          source={require("../assets/images/Parasite.jpg")}
+          source={require("../../assets/images/Batman.jpg")}
           style={styles.movieImage}
         />
-
         <LinearGradient
           colors={["transparent", "#0D160B"]}
           locations={[0, 0.9]}
@@ -32,14 +31,14 @@ const MovieDetails = ({ navigation }) => {
             height: 300,
           }}
         />
-        <Text style={styles.movieTitle}>Parasite</Text>
-        <Text style={styles.movieDetails}>Horror • Thriller • 2h 11m</Text>
+        <Text style={styles.movieTitle}>The Batman</Text>
+        <Text style={styles.movieDetails}>Action • Drama • 2h 56m</Text>
         <View style={styles.box}>
           <View style={styles.boxItem}>
-            <Text style={styles.boxText}> 17+ </Text>
+            <Text style={styles.boxText}> PG-13 </Text>
           </View>
           <View style={styles.transparentBoxItem}>
-            <Text style={styles.transparentBoxText}>KOR</Text>
+            <Text style={styles.transparentBoxText}>ENG</Text>
           </View>
           <View style={styles.transparentBoxItem}>
             <Text style={styles.transparentBoxText}>SUB INDO</Text>
@@ -58,17 +57,18 @@ const MovieDetails = ({ navigation }) => {
       <View style={styles.synopsisSection}>
         <Text style={styles.synopsisTitleText}>Synopsis</Text>
         <Text style={styles.synopsisText}>
-          "Parasite" is a South Korean dark comedy thriller directed by Bong
-          Joon-ho that follows the impoverished Kim family as they scheme to
-          infiltrate and manipulate the wealthy Park family. By securing various
-          household positions through deception, each Kim family member takes on
-          a different role within the Park household. The film intricately
-          explores themes of social inequality, greed, and class struggle,
-          ultimately culminating in a violent and tragic climax that exposes the
-          deep-rooted tensions between the affluent and the poor. "Parasite" is
-          lauded for its sharp social commentary, masterful storytelling, and
-          has received numerous accolades, including the Palme d'Or and multiple
-          Academy Awards, notably Best Picture.
+          "The Batman" is a superhero film directed by Matt Reeves that delves
+          into the early years of Bruce Wayne as the titular vigilante. Set in
+          Gotham City, the movie follows Batman as he uncovers a series of
+          cryptic clues left by a sadistic killer known as the Riddler. As
+          Batman investigates these clues, he uncovers a web of corruption that
+          connects to his own family's dark history. With the help of allies
+          like Selina Kyle (Catwoman) and James Gordon, Batman must confront his
+          deepest fears and bring the Riddler to justice. The film is praised
+          for its dark, noir-inspired tone, intense action sequences, and Robert
+          Pattinson's brooding performance as the caped crusader. "The Batman"
+          redefines the superhero genre with its gritty realism and
+          psychological depth.
         </Text>
       </View>
     </ScrollView>
@@ -187,4 +187,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MovieDetails;
+export default MovieDetailsTheBatman;

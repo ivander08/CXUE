@@ -30,24 +30,30 @@ const SeatSelection = ({ navigation }) => {
           .map(() => ({ selected: false }))
       ),
   ]);
-
   const handleSeatSelect = (groupIndex, rowIndex, seatIndex) => {
     const newSeats = [...seats];
     newSeats[groupIndex][rowIndex][seatIndex].selected =
       !newSeats[groupIndex][rowIndex][seatIndex].selected;
 
-    const seatLabel = `${String.fromCharCode(65 + rowIndex)}${seatIndex + 1}`; // Rows are labeled with letters, seats are labeled with numbers
+    // Calculate total seats in all previous groups
+    const totalSeatsInPreviousGroups = seats
+      .slice(0, groupIndex)
+      .reduce((total, group) => total + group[0].length, 0);
+
+    // Calculate seat number across groups
+    const seatNumber = totalSeatsInPreviousGroups + seatIndex + 1;
+
+    const seatLabel = `${String.fromCharCode(65 + rowIndex)}${seatNumber}`; // Rows are labeled with letters, seats are labeled with numbers
     if (newSeats[groupIndex][rowIndex][seatIndex].selected) {
       setSelectedSeats([...selectedSeats, seatLabel]);
     } else {
       setSelectedSeats(selectedSeats.filter((seat) => seat !== seatLabel));
     }
-
     setSeats(newSeats);
   };
 
   const handleSelectSeat = () => {
-    navigation.navigate("OrderPay", { cart: {}, selectedSeats }); 
+    navigation.navigate("OnboardingDrink", { cart: {}, selectedSeats }); 
   };
 
   return (
@@ -124,7 +130,14 @@ const SeatSelection = ({ navigation }) => {
                     />
                     {rowIndex === group.length - 1 && (
                       <Text key={seatIndex} style={styles.seatLabel}>
-                        {seatIndex + 1}
+                        {seats
+                          .slice(0, groupIndex)
+                          .reduce(
+                            (total, group) => total + group[0].length,
+                            0
+                          ) +
+                          seatIndex +
+                          1}
                       </Text>
                     )}
                   </TouchableOpacity>
