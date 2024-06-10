@@ -61,8 +61,7 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   button: {
-    position: "absolute",
-    top: 580,
+    top: 650,
     alignSelf: "center",
     width: 60,
     height: 60,
