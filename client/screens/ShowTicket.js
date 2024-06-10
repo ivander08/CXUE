@@ -1,8 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import Svg, { Path } from "react-native-svg";
+const buttonImage = require("../assets/images/btn-onboard.png");
+import Navbar from "../components/navbar";
+import { useNavigation } from '@react-navigation/native';
 
-const ShowTicket = () => {
+const ShowTicket = (route ) => {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
 
@@ -63,6 +67,11 @@ const ShowTicket = () => {
                         </View>
                         
                     </Svg>
+                    <TouchableOpacity style={styles.button}
+                        onPress={() => navigation.navigate('Navbar')}
+                        >
+                        <Text style={styles.buttonText}>Go Home</Text>
+                        </TouchableOpacity>
                 
             </ImageBackground>
         </View>
@@ -122,6 +131,19 @@ const styles = StyleSheet.create({
     justifySpaceBetween: {
         flexDirection: "row",
         justifyContent: "space-between",
+    },
+    button: {
+        backgroundColor: "red",
+        borderRadius: 7,
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        marginTop: 40,
+        width:'65%'
+    },
+    buttonText: {
+        color: "white",
+        fontSize: 16,
+        textAlign: "center",
     },
     box: {
         justifyContent: "flex-start",
