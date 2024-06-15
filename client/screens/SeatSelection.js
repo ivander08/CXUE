@@ -21,27 +21,28 @@ const SeatSelection = ({ route, navigation }) => {
       .map(() =>
         Array(4)
           .fill()
-          .map(() => ({ selected: false, price: 25000 }))
+          .map(() => ({ selected: false, price: 25000, disabled: false }))
       ),
     Array(9)
       .fill()
       .map(() =>
         Array(5)
           .fill()
-          .map(() => ({ selected: false, price: 25000 }))
+          .map(() => ({ selected: false, price: 25000, disabled: false }))
       ),
     Array(9)
       .fill()
       .map(() =>
         Array(4)
           .fill()
-          .map(() => ({ selected: false, price: 25000 }))
+          .map(() => ({ selected: false, price: 25000, disabled: false }))
       ),
   ]);
   const handleSeatSelect = (groupIndex, rowIndex, seatIndex) => {
     const newSeats = [...seats];
     newSeats[groupIndex][rowIndex][seatIndex].selected =
       !newSeats[groupIndex][rowIndex][seatIndex].selected;
+    newSeats[groupIndex][rowIndex][seatIndex].disabled = true; // disable the seat when it is selected
 
     const totalSeatsInPreviousGroups = seats
       .slice(0, groupIndex)
@@ -147,6 +148,7 @@ const SeatSelection = ({ route, navigation }) => {
                     onPress={() =>
                       handleSeatSelect(groupIndex, rowIndex, seatIndex)
                     }
+                    disabled={seat.disabled}
                   >
                     <MaterialIcons
                       name="event-seat"
