@@ -112,6 +112,7 @@ const DatenTheaterSelection = ({ navigation }) => {
       })
     );
     setSelectedCinema(cinemaIndex);
+    setSelectedDay(selectedDay);
   };
 
   const handleBuyTickets = () => {
@@ -154,7 +155,8 @@ const DatenTheaterSelection = ({ navigation }) => {
     setSelectedCinema(index === selectedCinema ? null : index);
   };
 
-  const [selectedDay, setSelectedDay] = useState(null);
+const [selectedDay, setSelectedDay] = useState(new Date());
+
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date();
     d.setDate(d.getDate() + i);
@@ -263,6 +265,7 @@ const DatenTheaterSelection = ({ navigation }) => {
                 ]}
                 onPress={() => {
                   setSelectedDay(day);
+                  setSelectedCinema(null);
                 }}
               >
                 <Text
