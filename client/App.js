@@ -4,13 +4,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Image, TouchableOpacity, View, Text } from "react-native";
 import { useFonts } from "expo-font";
 import { initializeApp } from "@firebase/app";
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreenRed from "./screens/LoadingScreenRed";
 import LoadingScreenWhite from "./screens/LoadingScreenWhite";
 import Register from "./screens/auth/Register";
 import Login from "./screens/auth/Login";
 import Home from "./screens/Home";
 import DrinkSelection from "./screens/DrinkSelection"; // Import screen baru
-import OnboardingDrink from "./screens/OnboardingDrink"; // Import screen baru with 
+import OnboardingDrink from "./screens/OnboardingDrink"; // Import screen baru with
 import Navbar from "./components/navbar";
 import Profile from "./screens/profile";
 import MovieDetailsParasite from "./screens/MovieDetails/MovieDetailsParasite";
@@ -24,6 +26,7 @@ import DatenTheaterSelection from "./screens/DatenTheaterSelection";
 import OrderPay from "./screens/OrderPay";
 import SeatSelection from "./screens/SeatSelection";
 import ShowTicket from "./screens/ShowTicket";
+import { getFirestore } from "firebase/firestore";
 
 const Stack = createStackNavigator();
 
@@ -37,7 +40,11 @@ const firebaseConfig = {
   measurementId: "G-V76PY08GJ3",
 };
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
+const db = getFirestore(app);
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -73,7 +80,7 @@ export default function App() {
           name="LoadingWhite"
           component={LoadingScreenWhite}
           options={{ headerShown: false }}
-        /> 
+        />
         <Stack.Screen
           name="Home"
           component={Home}
@@ -359,7 +366,7 @@ export default function App() {
               />
             ),
           }}
-        /> 
+        />
         <Stack.Screen
           name="DatenTheaterSelection"
           component={DatenTheaterSelection}
@@ -384,7 +391,7 @@ export default function App() {
                 style={{ width: 33, height: 33, marginLeft: 140 }}
               />
             ),
-          }}  
+          }}
         ></Stack.Screen>
         <Stack.Screen
           name="SeatSelection"
@@ -412,27 +419,31 @@ export default function App() {
             ),
           }}
         ></Stack.Screen>
-        <Stack.Screen 
-          name="OnboardingDrink" 
+        <Stack.Screen
+          name="OnboardingDrink"
           component={OnboardingDrink} // Tambahkan screen baru ke dalam stack navigator
           options={({ navigation }) => ({
             headerTitle: () => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Image
                   source={require("./assets/images/logo.png")}
                   style={{ width: 33, height: 33 }}
                 />
-                <Text style={{
-                  fontFamily: "interBlack",
-                  fontStyle: "italic",
-                  fontWeight: "900",
-                  fontSize: 22.5,
-                  color: "white",
-                  marginLeft: 5,
-                }}>CXUE</Text>
+                <Text
+                  style={{
+                    fontFamily: "interBlack",
+                    fontStyle: "italic",
+                    fontWeight: "900",
+                    fontSize: 22.5,
+                    color: "white",
+                    marginLeft: 5,
+                  }}
+                >
+                  CXUE
+                </Text>
               </View>
             ),
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerTransparent: true,
             headerStyle: {
               backgroundColor: "transparent",
@@ -441,7 +452,12 @@ export default function App() {
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
                   source={require("./assets/images/btn-back-white.png")}
-                  style={{ width: 7.23 * 1.75, height: 12.8 * 1.75, marginLeft: 20, marginBottom: 2.5}}
+                  style={{
+                    width: 7.23 * 1.75,
+                    height: 12.8 * 1.75,
+                    marginLeft: 20,
+                    marginBottom: 2.5,
+                  }}
                 />
               </TouchableOpacity>
             ),
