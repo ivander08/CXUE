@@ -16,15 +16,9 @@ function MyTickets({ route, navigation }) {
     return <View style={styles.container}></View>;
   }
   if (route.params) {
-    const {
-      cart,
-      cinemaName,
-      selectedDay,
-      selectedSeats,
-      showtimeType,
-      time,
-    } = route.params;
-    
+    const { cart, cinemaName, selectedDay, selectedSeats, showtimeType, time } =
+      route.params;
+
     const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
 
     const seatCount = selectedSeats.length;
@@ -34,12 +28,12 @@ function MyTickets({ route, navigation }) {
         const drink = drinks.find((item) => item.id === id);
         if (drink) {
           return (
-              <View key={id} style={styles.row}>
-                <Text style={styles.fnb}>
-                  {count}x {drink.name}
-                </Text>
-                <View style={styles.circle}></View>
-              </View>
+            <View key={id} style={styles.row}>
+              <Text style={styles.fnb}>
+                {count}x {drink.name}
+              </Text>
+              <View style={styles.circle}></View>
+            </View>
           );
         }
         return null;
@@ -59,7 +53,14 @@ function MyTickets({ route, navigation }) {
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                  navigation.navigate("ShowTicket");
+                  navigation.navigate("ShowTicket", {
+                    cart,
+                    cinemaName,
+                    selectedDay,
+                    selectedSeats,
+                    showtimeType,
+                    time,
+                  });
                 }}
               >
                 <Text style={styles.buttonText}>Show Ticket</Text>

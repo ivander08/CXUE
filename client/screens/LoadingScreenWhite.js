@@ -11,7 +11,7 @@ const LoadingScreenWhite = ({ navigation }) => {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: "Home" }, { name: "Navbar" }],
+          routes: [{ name: "Navbar" }],
         })
       );
     }, 4000);

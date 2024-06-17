@@ -12,7 +12,6 @@ import {
 import { BlurView } from "expo-blur";
 import Svg, { Path } from "react-native-svg";
 import { MaterialIcons } from "@expo/vector-icons";
-import { CommonActions } from "@react-navigation/native";
 
 const PrizeInText = ({ text }) => {
   return (
@@ -56,7 +55,6 @@ const ShowTicket = ({ route, navigation }) => {
     selectedSeats,
     showtimeType,
     time,
-    totalPrice,
   } = route.params;
 
   const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
@@ -68,7 +66,7 @@ const ShowTicket = ({ route, navigation }) => {
   const [modalContent, setModalContent] = useState(null);
 
   useEffect(() => {
-    const show = Math.random() < 0.5; // Adjust probability
+    const show = Math.random() < 1; // Adjust probability
     if (show) {
       setModalContent(getRandomReward());
       setModalVisible(true);
@@ -176,7 +174,6 @@ const ShowTicket = ({ route, navigation }) => {
               selectedSeats,
               showtimeType,
               time,
-              totalPrice,
             })
           }
         >
@@ -224,7 +221,7 @@ const ShowTicket = ({ route, navigation }) => {
               </View>
               <View style={styles.prizeContent}>{modalContent}</View>
               <View>
-                <Button title="Close" onPress={() => setModalVisible(false)} />
+                <Button title="Close" style={{backgroundColor: 'red'}} onPress={() => setModalVisible(false)} />
               </View>
             </View>
           </BlurView>
