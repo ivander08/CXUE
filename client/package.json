@@ -22,7 +22,8 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^15.3.0",
     "react-native-vector-icons": "^10.1.0",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "expo-blur": "~13.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3"
