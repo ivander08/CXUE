@@ -155,7 +155,7 @@ const DatenTheaterSelection = ({ navigation }) => {
     setSelectedCinema(index === selectedCinema ? null : index);
   };
 
-const [selectedDay, setSelectedDay] = useState(new Date());
+  const [selectedDay, setSelectedDay] = useState(new Date());
 
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date();

@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
-import { Foundation } from '@expo/vector-icons';
+import React from "react";
+import { View, StyleSheet, TextInput } from "react-native";
+import { Foundation } from "@expo/vector-icons";
 
 const InputBox = ({
   iconName,
@@ -15,7 +15,12 @@ const InputBox = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Foundation name={iconName} size={iconSize} color={iconColor} style={styles.icon} />
+      <Foundation
+        name={iconName}
+        size={iconSize}
+        color={iconColor}
+        style={styles.icon}
+      />
       <TextInput
         style={styles.input}
         placeholder={placeholder}
@@ -25,7 +30,7 @@ const InputBox = ({
         secureTextEntry={secureTextEntry}
         value={value}
         onChangeText={(text) => setValue(text)}
-        autoCapitalize='none'
+        autoCapitalize="none"
       />
     </View>
   );
@@ -33,12 +38,12 @@ const InputBox = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderBottomWidth: 1,
-    borderBottomColor: 'gray',
+    borderBottomColor: "gray",
     padding: 5,
-    fontFamily: 'interExtraLight'
+    fontFamily: "interExtraLight",
   },
   icon: {
     marginRight: 10,

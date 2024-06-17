@@ -1,12 +1,7 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import React from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-const MovieCard = ({ 
-    movieName,
-    movieDuration,
-    moviePoster,
-    onPress
-}) => {
+const MovieCard = ({ movieName, movieDuration, moviePoster, onPress }) => {
   return (
     <View style={styles.card}>
       <TouchableOpacity onPress={onPress}>
@@ -27,14 +22,14 @@ const styles = StyleSheet.create({
     height: 155,
   },
   title: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 5,
   },
   duration: {
     fontSize: 14,
-    color: 'gray',
+    color: "gray",
   },
 });
 

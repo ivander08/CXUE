@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import MovieCard from "../components/MovieCard";
 import PagerView from "react-native-pager-view";
 import { LinearGradient } from "expo-linear-gradient";
@@ -26,23 +20,23 @@ const Home = () => {
 
   const handleMovieCardPressShinGojira = () => {
     navigation.navigate("MovieDetailsShinGojira");
-  }
+  };
 
   const handleMovieCardPressBatman = () => {
     navigation.navigate("MovieDetailsTheBatman");
-  }
+  };
 
   const MovieDetailsIT = () => {
     navigation.navigate("MovieDetailsIT");
-  }
+  };
 
   const MovieDetailsJoker = () => {
     navigation.navigate("MovieDetailsJoker");
-  }
+  };
 
   const MovieDetailsMidsommar = () => {
     navigation.navigate("MovieDetailsMidsommar");
-  }
+  };
 
   const handleMovieCardPressArray = [
     handleMovieCardPressParasite,

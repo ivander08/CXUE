@@ -87,8 +87,14 @@ const DrinkItem = ({ item, cart, addToCart, removeFromCart }) => {
 
 const DrinkList = ({ route, navigation }) => {
   const [cart, setCart] = useState({});
-  const { totalPrice, cinemaName, showtimeType, time, selectedSeats, selectedDay } =
-    route.params;
+  const {
+    totalPrice,
+    cinemaName,
+    showtimeType,
+    time,
+    selectedSeats,
+    selectedDay,
+  } = route.params;
 
   const addToCart = (item) => {
     setCart((prevCart) => ({
@@ -139,23 +145,23 @@ const DrinkList = ({ route, navigation }) => {
         )}
         keyExtractor={(item) => item.id}
       />
-        <TouchableOpacity
-          style={styles.orderSummaryContainer}
-          onPress={() =>
-            navigation.navigate("OrderPay", {
-              cart,
-              totalPrice,
-              cinemaName,
-              showtimeType,
-              time,
-              selectedSeats,
-              selectedDay,
-            })
-          }
-        >
-          <Text style={styles.orderSummaryHead}>Order Summary</Text>
-          <Text style={styles.orderSummaryContent}>{renderCartSummary()}</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.orderSummaryContainer}
+        onPress={() =>
+          navigation.navigate("OrderPay", {
+            cart,
+            totalPrice,
+            cinemaName,
+            showtimeType,
+            time,
+            selectedSeats,
+            selectedDay,
+          })
+        }
+      >
+        <Text style={styles.orderSummaryHead}>Order Summary</Text>
+        <Text style={styles.orderSummaryContent}>{renderCartSummary()}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
