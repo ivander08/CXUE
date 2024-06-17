@@ -6,7 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { drinks } from "../screens/DrinkSelection"; // Sesuaikan path jika diperlukan
+import { drinks } from "../screens/DrinkSelection";
 
 // Dapatkan dimensi layar
 const { width } = Dimensions.get("window");
@@ -22,7 +22,7 @@ const OrderPay = ({ route, navigation }) => {
     totalPrice,
   } = route.params;
 
-  const seatLabels = selectedSeats.map(seat => seat.label).join(', ');
+  const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
 
   const seatCount = selectedSeats.length;
 
@@ -76,7 +76,9 @@ const OrderPay = ({ route, navigation }) => {
         </View>
         <Text style={styles.seatsHead}></Text>
         <View style={styles.seatFirst}>
-          <Text style={styles.seatItemText}>({seatCount}x) {seatLabels}</Text>
+          <Text style={styles.seatItemText}>
+            ({seatCount}x) {seatLabels}
+          </Text>
           <Text style={styles.seatItemText}>{selectedDay}</Text>
         </View>
         <View style={styles.seatFirst}>
@@ -104,7 +106,16 @@ const OrderPay = ({ route, navigation }) => {
       {/* Tombol Verify Payment */}
       <TouchableOpacity
         style={styles.orderSummaryContainer}
-        onPress={() => navigation.navigate("ShowTicket", { cart })}
+        onPress={() =>
+          navigation.navigate("ShowTicket", {
+            cart,
+            cinemaName,
+            selectedDay,
+            selectedSeats,
+            showtimeType,
+            time,
+          })
+        }
       >
         <Text style={styles.orderSummaryHead}>Verify Payment</Text>
         <Text style={styles.orderSummaryContent}>
