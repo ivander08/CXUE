@@ -12,15 +12,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { drinks } from "../screens/DrinkSelection";
 import { MaterialIcons } from "@expo/vector-icons";
 
-
-const PrizeInText = ({ text, code }) => (
+const PrizeInText = ({ text }) => (
   <View style={styles.prizeBorder}>
     <MaterialIcons name="card-giftcard" size={24} color="#D8C764" />
     <Text style={styles.prizeText}>{text}</Text>
   </View>
 );
 
-const PrizeWithImage = ({ image, code }) => (
+const PrizeWithImage = ({ image }) => (
   <View style={styles.centeredView}>
     <Image source={image} style={{ width: 100, height: 100 }} />
   </View>
@@ -52,7 +51,7 @@ const Prize = ({ prize }) => {
             </View>
             <View style={styles.prizeContent}>
               <View style={styles.prizeBorder}>
-              <Text style={styles.prizeText}>{prize.code}</Text>
+                <Text style={styles.prizeText}>{prize.code}</Text>
               </View>
               <TouchableOpacity
                 onPress={handleClose}
@@ -63,7 +62,7 @@ const Prize = ({ prize }) => {
             </View>
           </View>
         </TouchableOpacity>
-        </Modal>
+      </Modal>
 
       {prize.type === "text" ? (
         <TouchableOpacity onPress={handlePress}>
@@ -80,12 +79,16 @@ const Prize = ({ prize }) => {
 
 function MyTickets({ route, navigation }) {
   const [paramsArray, setParamsArray] = useState([]);
+
   const [isButtonClicked, setButtonClicked] = useState(false);
+
   const [prizeTexts, setPrizeTexts] = useState([]);
 
   useEffect(() => {
-    if (route.params) {
+    if (route.params && route.params.fromOrder) {
+      // Add new params to paramsArray
       setParamsArray((prevParamsArray) => [...prevParamsArray, route.params]);
+      // If prize exists, add its text to prizeTexts
       if (route.params.prize) {
         setPrizeTexts((prevPrizeTexts) => [
           ...prevPrizeTexts,
@@ -93,10 +96,6 @@ function MyTickets({ route, navigation }) {
         ]);
       }
     }
-
-    return () => {
-      setParamsArray([]);
-    };
   }, [route.params]);
 
   if (!route.params) {
@@ -147,9 +146,10 @@ function MyTickets({ route, navigation }) {
             prize,
           } = params;
 
-          // console.log(prize);
+          console.log(prize);
 
           const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
+
           const seatCount = selectedSeats.length;
 
           const renderCartSummary = () => {
@@ -187,6 +187,7 @@ function MyTickets({ route, navigation }) {
                         selectedSeats,
                         showtimeType,
                         time,
+                        fromOrder: false,
                       });
                     }}
                   >
@@ -413,10 +414,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   centeredView: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalBackgroundColor: {
     backgroundColor: "#1A1A1A",

@@ -59,7 +59,7 @@ export default function App() {
     //The navigation might need to be changed after the app is fully implemented
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="LoadingRed"
           component={LoadingScreenRed}
           options={{ headerShown: false }}
@@ -73,7 +73,7 @@ export default function App() {
           name="Login"
           component={Login}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           name="LoadingWhite"
           component={LoadingScreenWhite}

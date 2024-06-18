@@ -115,6 +115,7 @@ const OrderPay = ({ route, navigation }) => {
             showtimeType,
             time,
             getReward: true,
+            fromOrder: true,
           })
         }
       >
