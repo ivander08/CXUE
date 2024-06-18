@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { drinks } from "../screens/DrinkSelection";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const PrizeInText = ({ text, code }) => {
+const PrizeInText = ({ text }) => {
   return (
     <View style={styles.prizeBorder}>
       <MaterialIcons name="card-giftcard" size={24} color="#D8C764" />
@@ -20,7 +20,7 @@ const PrizeInText = ({ text, code }) => {
   );
 };
 
-const PrizeWithImage = ({ image, code }) => {
+const PrizeWithImage = ({ image }) => {
   return (
     <View style={styles.centeredView}>
       <Image source={image} style={{ width: 100, height: 100 }} />
@@ -114,7 +114,7 @@ function MyTickets({ route, navigation }) {
             prize,
           } = params;
 
-          console.log(prize);
+          // console.log(prize);
 
           const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
 
@@ -199,7 +199,8 @@ function MyTickets({ route, navigation }) {
               <View
                 key={index}
                 style={{
-                  marginVertical: 10,
+                  padding: 10,
+                  backgroundColor: "#141A13",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -351,6 +352,10 @@ const styles = StyleSheet.create({
     marginLeft: 80,
     opacity: 0.5,
   },
+  toggleButtonContainer: {
+    borderRadius: 15,
+    marginBottom: 65,
+  },
   toggleButton: {
     paddingHorizontal: 12,
     borderRadius: 5,
@@ -367,12 +372,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "left",
     fontFamily: "interExtraLight",
-  },
-  toggleButtonContainer: {
-    marginVertical: 100,
-    borderRadius: 15,
-    marginVertical: 13,
-    marginBottoom: 30,
   },
   clickedText: {
     backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -403,16 +402,6 @@ const styles = StyleSheet.create({
   prizeTextImage: {
     color: "#D8C764",
     fontSize: 20,
-  },
-  codeContainer: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 5,
-    padding: 10,
-    marginTop: 10,
-  },
-  codeText: {
-    fontFamily: 'monospace',
-    fontSize: 12,
   },
 });
 
