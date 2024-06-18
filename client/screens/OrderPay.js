@@ -114,6 +114,7 @@ const OrderPay = ({ route, navigation }) => {
             selectedSeats,
             showtimeType,
             time,
+            getReward: true,
           })
         }
       >

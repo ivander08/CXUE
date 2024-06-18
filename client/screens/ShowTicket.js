@@ -86,7 +86,7 @@ const ShowTicket = ({ route, navigation }) => {
       setPrize(reward);
       setModalVisible(true);
     }
-  }, []);
+  }, [route.params.showModal, showProbability]);
 
   return (
     <View style={styles.container}>
@@ -208,7 +208,7 @@ const ShowTicket = ({ route, navigation }) => {
             intensity={30}
             tint="dark"
             style={styles.fullScreen}
-            experimentalBlurMethod="dimezisBlurView" //Kadang bikin nge-lag
+            // experimentalBlurMethod="dimezisBlurView" //Kadang bikin nge-lag
           >
             <View style={styles.modalBackgroundColor}>
               <View style={styles.div}>
