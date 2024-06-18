@@ -7,7 +7,6 @@ import {
   ImageBackground,
   TouchableOpacity,
   Modal,
-  Button,
 } from "react-native";
 import { BlurView } from "expo-blur";
 import Svg, { Path } from "react-native-svg";
@@ -175,7 +174,6 @@ const ShowTicket = ({ route, navigation }) => {
             <Text style={styles.ticketLine}>
               _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             </Text>
-
             <Image
               style={styles.barcode}
               source={require("../assets/images/barcode.png")}
@@ -185,7 +183,6 @@ const ShowTicket = ({ route, navigation }) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            console.log(reward);
             navigation.navigate("MyTickets", {
               cart,
               cinemaName,

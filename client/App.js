@@ -26,7 +26,6 @@ import DatenTheaterSelection from "./screens/DatenTheaterSelection";
 import OrderPay from "./screens/OrderPay";
 import SeatSelection from "./screens/SeatSelection";
 import ShowTicket from "./screens/ShowTicket";
-import { getFirestore } from "firebase/firestore";
 
 const Stack = createStackNavigator();
 
@@ -44,7 +43,6 @@ const app = initializeApp(firebaseConfig);
 initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
-const db = getFirestore(app);
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -61,7 +59,7 @@ export default function App() {
     //The navigation might need to be changed after the app is fully implemented
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="LoadingRed"
           component={LoadingScreenRed}
           options={{ headerShown: false }}
@@ -75,7 +73,7 @@ export default function App() {
           name="Login"
           component={Login}
           options={{ headerShown: false }}
-        /> */}
+        />
         <Stack.Screen
           name="LoadingWhite"
           component={LoadingScreenWhite}
