@@ -65,13 +65,16 @@ const ShowTicket = ({ route, navigation }) => {
 
   const [modalContent, setModalContent] = useState(null);
 
+  const [showProbability, SetShowProbability] = useState(1);
   useEffect(() => {
-    const show = Math.random() < 1; // Adjust probability
-    if (show) {
+    
+    const show = route.params.getReward;
+    const showBasedOnProbability = Math.random() < showProbability;
+    if (show && showBasedOnProbability) {
       setModalContent(getRandomReward());
       setModalVisible(true);
     }
-  }, []);
+  }, [route.params.showModal, showProbability]);
 
   return (
     <View style={styles.container}>
@@ -191,7 +194,7 @@ const ShowTicket = ({ route, navigation }) => {
             intensity={30}
             tint="dark"
             style={styles.fullScreen}
-            experimentalBlurMethod="dimezisBlurView" //Kadang bikin nge-lag
+            // experimentalBlurMethod="dimezisBlurView" //Kadang bikin nge-lag
           >
             <View style={styles.modalBackgroundColor}>
               {/*experimentalBlurMethod='dimezisBlurView'*/}
