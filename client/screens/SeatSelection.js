@@ -42,7 +42,6 @@ const SeatSelection = ({ route, navigation }) => {
     const newSeats = [...seats];
     newSeats[groupIndex][rowIndex][seatIndex].selected =
       !newSeats[groupIndex][rowIndex][seatIndex].selected;
-    newSeats[groupIndex][rowIndex][seatIndex].disabled = true; // disable the seat when it is selected
 
     const totalSeatsInPreviousGroups = seats
       .slice(0, groupIndex)
