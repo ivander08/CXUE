@@ -13,6 +13,24 @@ import { BlurView } from "expo-blur";
 import Svg, { Path } from "react-native-svg";
 import { MaterialIcons } from "@expo/vector-icons";
 
+const prizeImage = require("../assets/images/ParasiteTShirt.png");
+
+const reward = [
+  {
+    type: "image",
+    image: prizeImage,
+    text: "PARASITE X CXUE T-SHIRT",
+  },
+  {
+    type: "text",
+    text: "1x Free Drink",
+  },
+  {
+    type: "text",
+    text: "1x Free Ticket",
+  },
+];
+
 const PrizeInText = ({ text }) => {
   return (
     <View style={styles.prizeBorder}>
@@ -22,40 +40,23 @@ const PrizeInText = ({ text }) => {
   );
 };
 
-const PrizeWithImage = ({ item, image }) => {
+const PrizeWithImage = ({ text, image }) => {
   return (
     <View style={styles.centeredView}>
       <Image source={image} />
-      <Text style={styles.prizeTextImage}>{item}</Text>
+      <Text style={styles.prizeTextImage}>{text}</Text>
     </View>
   );
 };
 
 function getRandomReward() {
-  const randomNumber = Math.random();
-  if (randomNumber < 0.4) {
-    return <PrizeInText text="1x Free Drink" />;
-  } else if (randomNumber < 0.2) {
-    return <PrizeInText text="1x Free Ticket" />;
-  } else {
-    return (
-      <PrizeWithImage
-        item="PARASITE X CXUE T-SHIRT"
-        image={require("../assets/images/ParasiteTShirt.png")}
-      />
-    );
-  }
+  const randomNumber = Math.floor(Math.random() * reward.length);
+  return reward[randomNumber];
 }
 
 const ShowTicket = ({ route, navigation }) => {
-  const {
-    cart,
-    cinemaName,
-    selectedDay,
-    selectedSeats,
-    showtimeType,
-    time,
-  } = route.params;
+  const { cart, cinemaName, selectedDay, selectedSeats, showtimeType, time } =
+    route.params;
 
   const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
 
@@ -65,10 +66,24 @@ const ShowTicket = ({ route, navigation }) => {
 
   const [modalContent, setModalContent] = useState(null);
 
+  const [prize, setPrize] = useState([]);
+
   useEffect(() => {
-    const show = Math.random() < 1; // Adjust probability
+    const show = Math.random() < 0.5; // Adjust probability
     if (show) {
-      setModalContent(getRandomReward());
+      const reward = getRandomReward();
+      let rewardComponent;
+      // If the reward is a text type
+      if (reward.type === "image") {
+        rewardComponent = (
+          <PrizeWithImage item={reward.text} image={prizeImage} />
+        );
+      } else {
+        // If the reward is an image type
+        rewardComponent = <PrizeInText text={reward.text} />;
+      }
+      setModalContent(rewardComponent);
+      setPrize(reward);
       setModalVisible(true);
     }
   }, []);
@@ -166,7 +181,8 @@ const ShowTicket = ({ route, navigation }) => {
         </Svg>
         <TouchableOpacity
           style={styles.button}
-          onPress={() =>
+          onPress={() => {
+            console.log(reward);
             navigation.navigate("MyTickets", {
               cart,
               cinemaName,
@@ -174,8 +190,9 @@ const ShowTicket = ({ route, navigation }) => {
               selectedSeats,
               showtimeType,
               time,
-            })
-          }
+              prize,
+            });
+          }}
         >
           <Text style={styles.buttonText}>Go Home</Text>
         </TouchableOpacity>
@@ -194,26 +211,6 @@ const ShowTicket = ({ route, navigation }) => {
             experimentalBlurMethod="dimezisBlurView" //Kadang bikin nge-lag
           >
             <View style={styles.modalBackgroundColor}>
-              {/*experimentalBlurMethod='dimezisBlurView'*/}
-              {/* It's logo if want*/}
-              {/* <View style={{ flexDirection: "row", alignItems: "center", position: "absolute", top:10}}>
-                                <Image
-                                source={require("../assets/images/logo.png")}
-                                style={{ width: 33, height: 33, marginHorizontal: 10}}
-                                />
-                                <Text
-                                style={{
-                                    fontFamily: "interBlack",
-                                    fontStyle: "italic",
-                                    fontWeight: "900",
-                                    fontSize: 22.5,
-                                    color: "#fefefe",
-                                    marginHorizontal: 5
-                                }}
-                                >
-                                CXUE
-                                </Text>
-                            </View> */}
               <View style={styles.div}>
                 <Image source={require("../assets/images/gift.png")} />
                 <Text style={styles.modalTextBig}>Congratulations!</Text>
@@ -221,7 +218,12 @@ const ShowTicket = ({ route, navigation }) => {
               </View>
               <View style={styles.prizeContent}>{modalContent}</View>
               <View>
-                <Button title="Close" style={{backgroundColor: 'red'}} onPress={() => setModalVisible(false)} />
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={styles.buttonText}>Close</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </BlurView>
@@ -422,6 +424,13 @@ const styles = StyleSheet.create({
   prizeTextImage: {
     color: "#D8C764",
     fontSize: 20,
+  },
+  closeButton: {
+    backgroundColor: "red",
+    borderRadius: 7,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    width: "65%",
   },
 });
 

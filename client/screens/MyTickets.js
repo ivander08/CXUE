@@ -16,8 +16,16 @@ function MyTickets({ route, navigation }) {
     return <View style={styles.container}></View>;
   }
   if (route.params) {
-    const { cart, cinemaName, selectedDay, selectedSeats, showtimeType, time } =
-      route.params;
+    const {
+      cart,
+      cinemaName,
+      selectedDay,
+      selectedSeats,
+      showtimeType,
+      time,
+      prize,
+    } = route.params;
+    console.log(prize)
 
     const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
 
