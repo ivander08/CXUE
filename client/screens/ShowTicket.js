@@ -82,7 +82,7 @@ const ShowTicket = ({ route, navigation }) => {
       let generatedCode = null;
 
       if (reward.type === "image") {
-        generatedCode = generateCode("IM", 6);
+        generatedCode = generateCode("TS", 6);
         rewardComponent = (
           <PrizeWithImage item={reward.text} image={prizeImage} />
         );
