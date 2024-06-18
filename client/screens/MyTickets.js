@@ -4,108 +4,218 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  Image,
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { drinks } from "../screens/DrinkSelection";
+import { MaterialIcons } from "@expo/vector-icons";
+
+const PrizeInText = ({ text, code }) => {
+  return (
+    <View style={styles.prizeBorder}>
+      <MaterialIcons name="card-giftcard" size={24} color="#D8C764" />
+      <Text style={styles.prizeText}>{text}</Text>
+    </View>
+  );
+};
+
+const PrizeWithImage = ({ image, code }) => {
+  return (
+    <View style={styles.centeredView}>
+      <Image source={image} style={{ width: 100, height: 100 }} />
+    </View>
+  );
+};
+
+const Prize = ({ prize }) => {
+  if (prize.type === "text") {
+    return <PrizeInText text={prize.text} />;
+  } else if (prize.type === "image") {
+    return <PrizeWithImage text={prize.text} image={prize.image} />;
+  } else {
+    return null;
+  }
+};
 
 function MyTickets({ route, navigation }) {
   const [paramsArray, setParamsArray] = useState([]);
 
-  console.log(paramsArray);
+  const [isButtonClicked, setButtonClicked] = useState(false);
+
+  const [prizeTexts, setPrizeTexts] = useState([]);
 
   useEffect(() => {
     if (route.params) {
       // Add new params to paramsArray
-      setParamsArray(prevParamsArray => [...prevParamsArray, route.params]);
+      setParamsArray((prevParamsArray) => [...prevParamsArray, route.params]);
+
+      // If prize exists, add its text to prizeTexts
+      if (route.params.prize) {
+        setPrizeTexts((prevPrizeTexts) => [
+          ...prevPrizeTexts,
+          route.params.prize,
+        ]);
+      }
     }
+
+    // Cleanup function
+    return () => {
+      setParamsArray([]);
+    };
   }, [route.params]);
 
   if (!route.params) {
     // handle the case when no parameters are passed
-    return <View style={styles.container}></View>;
+    return (
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.line}></View>
+        <View style={styles.toggleButtonContainer}>
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={() => setButtonClicked(!isButtonClicked)}
+          >
+            <Text style={styles.toggleButtonText}>Inventory</Text>
+            {isButtonClicked ? (
+              <MaterialIcons name="keyboard-arrow-up" size={30} color="white" />
+            ) : (
+              <MaterialIcons
+                name="keyboard-arrow-down"
+                size={30}
+                color="white"
+              />
+            )}
+          </TouchableOpacity>
+          {isButtonClicked &&
+            prizeTexts.map((text, index) => (
+              <Text
+                key={index}
+                style={isButtonClicked ? styles.clickedText : null}
+              >
+                {text ? text : "No prize"}
+              </Text>
+            ))}
+        </View>
+      </ScrollView>
+    );
   }
   if (route.params) {
-    const {
-      cart,
-      cinemaName,
-      selectedDay,
-      selectedSeats,
-      showtimeType,
-      time,
-      prize,
-    } = route.params;
-    console.log(prize)
+    return (
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.line}></View>
+        {paramsArray.map((params, index) => {
+          const {
+            cart,
+            cinemaName,
+            selectedDay,
+            selectedSeats,
+            showtimeType,
+            time,
+            prize,
+          } = params;
 
-    const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
+          console.log(prize);
 
-    const seatCount = selectedSeats.length;
+          const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
 
-    const renderCartSummary = () => {
-      return Object.entries(cart).map(([id, count]) => {
-        const drink = drinks.find((item) => item.id === id);
-        if (drink) {
+          const seatCount = selectedSeats.length;
+
+          const renderCartSummary = () => {
+            return Object.entries(cart).map(([id, count]) => {
+              const drink = drinks.find((item) => item.id === id);
+              if (drink) {
+                return (
+                  <View key={id} style={styles.row}>
+                    <Text style={styles.fnb}>
+                      {count}x {drink.name}
+                    </Text>
+                    <View style={styles.circle}></View>
+                  </View>
+                );
+              }
+              return null;
+            });
+          };
+
           return (
-            <View key={id} style={styles.row}>
-              <Text style={styles.fnb}>
-                {count}x {drink.name}
-              </Text>
-              <View style={styles.circle}></View>
+            <View key={index} style={styles.innercontainer}>
+              <View style={styles.box}>
+                <View style={styles.title}>
+                  <View style={styles.icon}>
+                    <Ionicons name="ticket" size={20} color="white" />
+                  </View>
+                  <Text style={styles.movie}>Parasite</Text>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
+                      navigation.navigate("ShowTicket", {
+                        cart,
+                        cinemaName,
+                        selectedDay,
+                        selectedSeats,
+                        showtimeType,
+                        time,
+                      });
+                    }}
+                  >
+                    <Text style={styles.buttonText}>Show Ticket</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.title}>
+                  <Text style={styles.count}>{seatCount}x</Text>
+                  <Text style={styles.seat}>{seatLabels}</Text>
+                  <Text style={styles.info}>{selectedDay}</Text>
+                </View>
+                <View style={styles.title}>
+                  <Text style={styles.theater}>{cinemaName}</Text>
+                  <Text style={styles.theater}>{showtimeType}</Text>
+                  <Text style={styles.theater}>{time}</Text>
+                </View>
+                <View style={[styles.innerline]}></View>
+                {renderCartSummary()}
+              </View>
             </View>
           );
-        }
-        return null;
-      });
-    };
-
-    return (
-      <View style={styles.container}>
+        })}
         <View style={styles.line}></View>
-        <View style={styles.innercontainer}>
-          <View style={styles.box}>
-            <View style={styles.title}>
-              <View style={styles.icon}>
-                <Ionicons name="ticket" size={20} color="white" />
-              </View>
-              <Text style={styles.movie}>Parasite</Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  navigation.navigate("ShowTicket", {
-                    cart,
-                    cinemaName,
-                    selectedDay,
-                    selectedSeats,
-                    showtimeType,
-                    time,
-                  });
+        <View style={styles.toggleButtonContainer}>
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={() => setButtonClicked(!isButtonClicked)}
+          >
+            <Text style={styles.toggleButtonText}>Inventory</Text>
+            {isButtonClicked ? (
+              <MaterialIcons name="keyboard-arrow-up" size={30} color="white" />
+            ) : (
+              <MaterialIcons
+                name="keyboard-arrow-down"
+                size={30}
+                color="white"
+              />
+            )}
+          </TouchableOpacity>
+          {isButtonClicked &&
+            prizeTexts.map((prize, index) => (
+              <View
+                key={index}
+                style={{
+                  marginVertical: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <Text style={styles.buttonText}>Show Ticket</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.title}>
-              <Text style={styles.count}>{seatCount}x</Text>
-              <Text style={styles.seat}>{seatLabels}</Text>
-              <Text style={styles.info}>{selectedDay}</Text>
-            </View>
-            <View style={styles.title}>
-              <Text style={styles.theater}>{cinemaName}</Text>
-              <Text style={styles.theater}>{showtimeType}</Text>
-              <Text style={styles.theater}>{time}</Text>
-            </View>
-            <View style={[styles.innerline]}></View>
-            {renderCartSummary()}
-          </View>
+                <Prize prize={prize} />
+              </View>
+            ))}
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: "#0D160B",
     alignItems: "center",
   },
@@ -240,6 +350,69 @@ const styles = StyleSheet.create({
     margin: 10,
     marginLeft: 80,
     opacity: 0.5,
+  },
+  toggleButton: {
+    paddingHorizontal: 12,
+    borderRadius: 5,
+    marginVertical: 10,
+    backgroundColor: "#1a1a1a",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 80,
+    width: 350,
+  },
+  toggleButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    textAlign: "left",
+    fontFamily: "interExtraLight",
+  },
+  toggleButtonContainer: {
+    marginVertical: 100,
+    borderRadius: 15,
+    marginVertical: 13,
+    marginBottoom: 30,
+  },
+  clickedText: {
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    color: "#fff",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 5,
+  },
+  prizeBorder: {
+    borderWidth: 0.8,
+    borderRadius: 10,
+    borderColor: "#D8C764",
+    backgroundColor: "#182017",
+    padding: 10,
+    flexDirection: "row",
+    width: 200,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  prizeText: {
+    color: "white",
+    fontSize: 20,
+  },
+  centeredView: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  prizeTextImage: {
+    color: "#D8C764",
+    fontSize: 20,
+  },
+  codeContainer: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 10,
+  },
+  codeText: {
+    fontFamily: 'monospace',
+    fontSize: 12,
   },
 });
 
