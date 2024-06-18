@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
@@ -11,6 +10,17 @@ import { Ionicons } from "@expo/vector-icons";
 import { drinks } from "../screens/DrinkSelection";
 
 function MyTickets({ route, navigation }) {
+  const [paramsArray, setParamsArray] = useState([]);
+
+  console.log(paramsArray);
+
+  useEffect(() => {
+    if (route.params) {
+      // Add new params to paramsArray
+      setParamsArray(prevParamsArray => [...prevParamsArray, route.params]);
+    }
+  }, [route.params]);
+
   if (!route.params) {
     // handle the case when no parameters are passed
     return <View style={styles.container}></View>;
