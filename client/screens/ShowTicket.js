@@ -68,9 +68,12 @@ const ShowTicket = ({ route, navigation }) => {
 
   const [prize, setPrize] = useState([]);
 
+  const [showProbability, setShowProbability] = useState(1); // Adjust probability
+
   useEffect(() => {
-    const show = Math.random() < 0.5; // Adjust probability
-    if (show) {
+    const show = route.params.getReward; 
+    const showBasedOnProbability = Math.random() < showProbability;
+    if (show && showBasedOnProbability) {
       const reward = getRandomReward();
       let rewardComponent;
       // If the reward is a text type
