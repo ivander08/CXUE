@@ -147,7 +147,7 @@ function MyTickets({ route, navigation }) {
             prize,
           } = params;
 
-          console.log(prize);
+          // console.log(prize);
 
           const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
           const seatCount = selectedSeats.length;
@@ -231,7 +231,8 @@ function MyTickets({ route, navigation }) {
               <View
                 key={index}
                 style={{
-                  marginVertical: 10,
+                  padding: 10,
+                  backgroundColor: "#141A13",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
@@ -383,6 +384,10 @@ const styles = StyleSheet.create({
     marginLeft: 80,
     opacity: 0.5,
   },
+  toggleButtonContainer: {
+    borderRadius: 15,
+    marginBottom: 65,
+  },
   toggleButton: {
     paddingHorizontal: 12,
     borderRadius: 5,
@@ -399,12 +404,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "left",
     fontFamily: "interExtraLight",
-  },
-  toggleButtonContainer: {
-    marginVertical: 100,
-    borderRadius: 15,
-    marginVertical: 13,
-    marginBottoom: 30,
   },
   clickedText: {
     backgroundColor: "rgba(255, 255, 255, 0.1)",
