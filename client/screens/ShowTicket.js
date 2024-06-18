@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ImageBackground,
-  TouchableOpacity,
-  Modal,
-} from "react-native";
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity, Modal } from "react-native";
 import { BlurView } from "expo-blur";
 import Svg, { Path } from "react-native-svg";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -30,44 +22,46 @@ const reward = [
   },
 ];
 
-const PrizeInText = ({ text }) => {
-  return (
-    <View style={styles.prizeBorder}>
-      <MaterialIcons name="card-giftcard" size={24} color="#D8C764" />
-      <Text style={styles.prizeText}>{text}</Text>
-    </View>
-  );
-};
+const PrizeInText = ({ text }) => (
+  <View style={styles.prizeBorder}>
+    <MaterialIcons name="card-giftcard" size={24} color="#D8C764" />
+    <Text style={styles.prizeText}>{text}</Text>
+  </View>
+);
 
-const PrizeWithImage = ({ text, image }) => {
-  return (
-    <View style={styles.centeredView}>
-      <Image source={image} />
-      <Text style={styles.prizeTextImage}>{text}</Text>
-    </View>
-  );
-};
+const PrizeWithImage = ({ text, image }) => (
+  <View style={styles.centeredView}>
+    <Image source={image} />
+    <Text style={styles.prizeTextImage}>{text}</Text>
+  </View>
+);
 
 function getRandomReward() {
   const randomNumber = Math.floor(Math.random() * reward.length);
   return reward[randomNumber];
 }
 
+function generateCode(prefix, length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let code = prefix;
+  for (let i = 0; i < length; i++) {
+    code += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return code;
+}
+
 const ShowTicket = ({ route, navigation }) => {
-  const { cart, cinemaName, selectedDay, selectedSeats, showtimeType, time } =
-    route.params;
+  const { cart, cinemaName, selectedDay, selectedSeats, showtimeType, time } = route.params;
 
   const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
-
   const seatCount = selectedSeats.length;
 
   const [ModalVisible, setModalVisible] = useState(false);
-
   const [modalContent, setModalContent] = useState(null);
-
   const [prize, setPrize] = useState([]);
-
   const [showProbability, setShowProbability] = useState(1); // Adjust probability
+
+  const [inventory, setInventory] = useState([]); // User's inventory
 
   useEffect(() => {
     const show = route.params.getReward; 
@@ -75,18 +69,30 @@ const ShowTicket = ({ route, navigation }) => {
     if (show && showBasedOnProbability) {
       const reward = getRandomReward();
       let rewardComponent;
-      // If the reward is a text type
+      let generatedCode = null;
+
       if (reward.type === "image") {
-        rewardComponent = (
-          <PrizeWithImage item={reward.text} image={prizeImage} />
-        );
+        generatedCode = generateCode("IM", 6);
+        rewardComponent = <PrizeWithImage item={reward.text} image={prizeImage} />;
       } else {
-        // If the reward is an image type
-        rewardComponent = <PrizeInText text={reward.text} />;
+        if (reward.text === "1x Free Drink") {
+          generatedCode = generateCode("DR", 6);
+          rewardComponent = <PrizeInText text={`${reward.text}`} />;
+        } else if (reward.text === "1x Free Ticket") {
+          generatedCode = generateCode("TK", 6);
+          rewardComponent = <PrizeInText text={`${reward.text}`} />;
+        } else {
+          rewardComponent = <PrizeInText text={reward.text} />;
+        }
       }
+
       setModalContent(rewardComponent);
-      setPrize(reward);
+      setPrize({ ...reward, code: generatedCode });
       setModalVisible(true);
+
+      if (generatedCode) {
+        setInventory((prevInventory) => [...prevInventory, { ...reward, code: generatedCode }]);
+      }
     }
   }, [route.params.showModal, showProbability]);
 
@@ -99,8 +105,8 @@ const ShowTicket = ({ route, navigation }) => {
         <View style={styles.overlay} />
         <Svg width="318" height="444" viewBox="0 0 318 444">
           <Path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M5.91278e-05 15C5.91278e-05 6.71573 6.71579 0 15.0001 0H303C311.284 0 318 6.71573 318 15V257C306.402 257 297 266.402 297 278C297 289.598 306.402 299 318 299V429C318 437.284 311.284 444 303 444H15.0001C6.71579 444 5.91278e-05 437.284 5.91278e-05 429L0 299.06C11.6311 299.06 21.06 289.631 21.06 278C21.06 266.369 11.6311 256.94 0 256.94L5.91278e-05 15Z"
             fill="#FEFEFE"
           />
@@ -133,18 +139,9 @@ const ShowTicket = ({ route, navigation }) => {
             </View>
             <View style={styles.ticketDetails}>
               <View style={styles.justifySpaceBetween}>
-                <Text
-                  style={[styles.transparentText, styles.ticketDetailsText]}
-                >
-                  Date
-                </Text>
-                <Text
-                  style={[styles.transparentText, styles.ticketDetailsText]}
-                >
-                  Time
-                </Text>
+                <Text style={[styles.transparentText, styles.ticketDetailsText]}>Date</Text>
+                <Text style={[styles.transparentText, styles.ticketDetailsText]}>Time</Text>
               </View>
-
               <View style={styles.justifySpaceBetween}>
                 <Text style={styles.ticketDetailsText}>{selectedDay}</Text>
                 <Text style={styles.ticketDetailsText}>{time}</Text>
@@ -152,18 +149,9 @@ const ShowTicket = ({ route, navigation }) => {
             </View>
             <View style={styles.ticketDetails}>
               <View style={styles.justifySpaceBetween}>
-                <Text
-                  style={[styles.transparentText, styles.ticketDetailsText]}
-                >
-                  Studio
-                </Text>
-                <Text
-                  style={[styles.transparentText, styles.ticketDetailsText]}
-                >
-                  Seat
-                </Text>
+                <Text style={[styles.transparentText, styles.ticketDetailsText]}>Studio</Text>
+                <Text style={[styles.transparentText, styles.ticketDetailsText]}>Seat</Text>
               </View>
-
               <View style={styles.justifySpaceBetween}>
                 <Text style={styles.ticketDetailsText}>
                   {`${Math.floor(Math.random() * 4) + 1}, ${cinemaName}`}
@@ -172,7 +160,7 @@ const ShowTicket = ({ route, navigation }) => {
               </View>
             </View>
             <Text style={styles.ticketLine}>
-              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+              _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
             </Text>
             <Image
               style={styles.barcode}
@@ -208,7 +196,6 @@ const ShowTicket = ({ route, navigation }) => {
             intensity={30}
             tint="dark"
             style={styles.fullScreen}
-            // experimentalBlurMethod="dimezisBlurView" //Kadang bikin nge-lag
           >
             <View style={styles.modalBackgroundColor}>
               <View style={styles.div}>
@@ -216,13 +203,24 @@ const ShowTicket = ({ route, navigation }) => {
                 <Text style={styles.modalTextBig}>Congratulations!</Text>
                 <Text style={styles.modalText}>You won a special prize</Text>
               </View>
-              <View style={styles.prizeContent}>{modalContent}</View>
-              <View>
+              {modalContent}
+              <View style={styles.buttonView}>
                 <TouchableOpacity
-                  style={styles.closeButton}
-                  onPress={() => setModalVisible(false)}
+                  onPress={() => {
+                    setModalVisible(false);
+                    navigation.navigate("MyTickets", {
+                      cart,
+                      cinemaName,
+                      selectedDay,
+                      selectedSeats,
+                      showtimeType,
+                      time,
+                      prize,
+                    });
+                  }}
+                  style={styles.button}
                 >
-                  <Text style={styles.buttonText}>Close</Text>
+                  <Text style={styles.buttonText}>Go Home</Text>
                 </TouchableOpacity>
               </View>
             </View>

@@ -6,51 +6,86 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Modal,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { drinks } from "../screens/DrinkSelection";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const PrizeInText = ({ text, code }) => {
-  return (
-    <View style={styles.prizeBorder}>
-      <MaterialIcons name="card-giftcard" size={24} color="#D8C764" />
-      <Text style={styles.prizeText}>{text}</Text>
-    </View>
-  );
-};
 
-const PrizeWithImage = ({ image, code }) => {
-  return (
-    <View style={styles.centeredView}>
-      <Image source={image} style={{ width: 100, height: 100 }} />
-    </View>
-  );
-};
+const PrizeInText = ({ text, code }) => (
+  <View style={styles.prizeBorder}>
+    <MaterialIcons name="card-giftcard" size={24} color="#D8C764" />
+    <Text style={styles.prizeText}>{text}</Text>
+  </View>
+);
+
+const PrizeWithImage = ({ image, code }) => (
+  <View style={styles.centeredView}>
+    <Image source={image} style={{ width: 100, height: 100 }} />
+  </View>
+);
 
 const Prize = ({ prize }) => {
-  if (prize.type === "text") {
-    return <PrizeInText text={prize.text} />;
-  } else if (prize.type === "image") {
-    return <PrizeWithImage text={prize.text} image={prize.image} />;
-  } else {
-    return null;
-  }
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handlePress = () => {
+    setModalVisible(true);
+  };
+
+  const handleClose = () => {
+    setModalVisible(false);
+  };
+
+  return (
+    <View>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={handleClose}
+      >
+        <TouchableOpacity style={styles.centeredView} onPress={handleClose}>
+          <View style={styles.modalBackgroundColor}>
+            <View style={styles.div}>
+              <Text style={styles.modalText}>Your Coupon Code:</Text>
+            </View>
+            <View style={styles.prizeContent}>
+              <View style={styles.prizeBorder}>
+              <Text style={styles.prizeText}>{prize.code}</Text>
+              </View>
+              <TouchableOpacity
+                onPress={handleClose}
+                style={styles.closeButton}
+              >
+                <Text style={styles.buttonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableOpacity>
+        </Modal>
+
+      {prize.type === "text" ? (
+        <TouchableOpacity onPress={handlePress}>
+          <PrizeInText text={prize.text} code={prize.code} />
+        </TouchableOpacity>
+      ) : prize.type === "image" ? (
+        <TouchableOpacity onPress={handlePress}>
+          <PrizeWithImage image={prize.image} code={prize.code} />
+        </TouchableOpacity>
+      ) : null}
+    </View>
+  );
 };
 
 function MyTickets({ route, navigation }) {
   const [paramsArray, setParamsArray] = useState([]);
-
   const [isButtonClicked, setButtonClicked] = useState(false);
-
   const [prizeTexts, setPrizeTexts] = useState([]);
 
   useEffect(() => {
     if (route.params) {
-      // Add new params to paramsArray
       setParamsArray((prevParamsArray) => [...prevParamsArray, route.params]);
-
-      // If prize exists, add its text to prizeTexts
       if (route.params.prize) {
         setPrizeTexts((prevPrizeTexts) => [
           ...prevPrizeTexts,
@@ -59,14 +94,12 @@ function MyTickets({ route, navigation }) {
       }
     }
 
-    // Cleanup function
     return () => {
       setParamsArray([]);
     };
   }, [route.params]);
 
   if (!route.params) {
-    // handle the case when no parameters are passed
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.line}></View>
@@ -117,7 +150,6 @@ function MyTickets({ route, navigation }) {
           console.log(prize);
 
           const seatLabels = selectedSeats.map((seat) => seat.label).join(", ");
-
           const seatCount = selectedSeats.length;
 
           const renderCartSummary = () => {
@@ -381,8 +413,37 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 5,
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalBackgroundColor: {
+    backgroundColor: "#1A1A1A",
+    borderRadius: 15,
+    padding: 20,
+    width: "80%",
+    alignItems: "center",
+  },
+  div: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+  },
+  modalTextBig: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 30,
+    marginTop: 10,
+  },
+  modalText: {
+    color: "white",
+    fontSize: 16,
+    textAlign: "center",
+  },
   prizeBorder: {
-    borderWidth: 0.8,
+    borderWidth: 1,
     borderRadius: 10,
     borderColor: "#D8C764",
     backgroundColor: "#182017",
@@ -391,28 +452,27 @@ const styles = StyleSheet.create({
     width: 200,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 10,
   },
   prizeText: {
     color: "white",
     fontSize: 20,
+    marginLeft: 10,
   },
-  centeredView: {
-    justifyContent: "center",
+  prizeContent: {
     alignItems: "center",
+    justifyContent: "center",
+  },
+  closeButton: {
+    backgroundColor: "#D8C764",
+    borderRadius: 7,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginTop: 20,
   },
   prizeTextImage: {
     color: "#D8C764",
     fontSize: 20,
-  },
-  codeContainer: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 5,
-    padding: 10,
-    marginTop: 10,
-  },
-  codeText: {
-    fontFamily: 'monospace',
-    fontSize: 12,
   },
 });
 

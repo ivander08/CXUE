@@ -15,7 +15,7 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
 } from "firebase/auth";
-// import { launchImageLibrary } from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const Profile = ({ navigation }) => {
   const [image, setImage] = useState(null);
@@ -26,25 +26,25 @@ const Profile = ({ navigation }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  // const selectImage = () => {
-  //     let options = {
-  //         storageOptions: {
-  //         skipBackup: true,
-  //         path: 'images',
-  //         },
-  //     };
+  const selectImage = () => {
+      let options = {
+          storageOptions: {
+          skipBackup: true,
+          path: 'images',
+          },
+      };
 
-  //     launchImageLibrary(options, (response) => {
-  //         if (response.didCancel) {
-  //         console.log('User cancelled image picker');
-  //         } else if (response.error) {
-  //         console.log('ImagePicker Error: ', response.error);
-  //         } else {
-  //         const source = { uri: response.uri };
-  //         setImage(source);
-  //         }
-  //     });
-  // };
+      launchImageLibrary(options, (response) => {
+          if (response.didCancel) {
+          console.log('User cancelled image picker');
+          } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+          } else {
+          const source = { uri: response.uri };
+          setImage(source);
+          }
+      });
+  };
 
   const changePassword = (newPassword) => {
     const credential = EmailAuthProvider.credential(
@@ -79,13 +79,9 @@ const Profile = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.line} />
-      {/* <TouchableOpacity onPress={selectImage}> */}
-      {/* <Image style={styles.profilePic} source={image || require('../assets/images/Batman.jpg')}/> */}
-      <Image
-        style={styles.profilePic}
-        source={require("../assets/images/Batman.jpg")}
-      />
-      {/* </TouchableOpacity> */}
+      <TouchableOpacity onPress={selectImage}>
+      <Image style={styles.profilePic} source={image || require('../assets/images/Batman.jpg')}/>
+      </TouchableOpacity>
 
       <View style={styles.innerContainer}>
         <View style={styles.infobox}>
