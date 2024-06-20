@@ -33,21 +33,19 @@ const Login = ({ navigation }) => {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [
-              { name: 'LoadingWhite' },
-            ],
+            routes: [{ name: "LoadingWhite" }],
           })
         );
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        if(errorCode === 'auth/invalid-credential') {
-          alert('Invalid email address or wrong password');
+        if (errorCode === "auth/invalid-credential") {
+          alert("Invalid email address or wrong password");
           return;
         }
-        if(errorCode === 'auth/wrong-password') {
-          alert('Incorrect password');
+        if (errorCode === "auth/wrong-password") {
+          alert("Incorrect password");
           return;
         }
         console.log(errorCode, errorMessage);
@@ -95,6 +93,7 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
+        <Text style={styles.namakel}>SD-OTWC</Text>
       </ScrollView>
     </ImageBackground>
   );
@@ -146,6 +145,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 16,
+    textAlign: "center",
+  },
+  namakel: {
+    fontFamily: "interBlack",
+    fontSize: 35,
+    fontWeight: "bold",
+    bottom: -100,
     textAlign: "center",
   },
 });
