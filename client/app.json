@@ -3,6 +3,11 @@
     "name": "blank",
     "slug": "blank",
     "version": "1.0.0",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "platforms": [
       "ios",
       "android",
@@ -12,9 +17,21 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/Inter-Black.ttf", "./assets/fonts/Inter-ExtraLight.ttf"]
+          "fonts": [
+            "./assets/fonts/Inter-Black.ttf",
+            "./assets/fonts/Inter-ExtraLight.ttf",
+            "./assets/fonts/Inter-Regular.ttf"
+          ]
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8845da39-e925-435a-a8e6-6d3720216881"
+      }
+    },
+    "android": {
+      "package": "com.rlatksk.blank"
+    }
   }
 }
