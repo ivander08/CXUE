@@ -26,6 +26,8 @@ import DatenTheaterSelection from "./screens/DatenTheaterSelection";
 import OrderPay from "./screens/OrderPay";
 import SeatSelection from "./screens/SeatSelection";
 import ShowTicket from "./screens/ShowTicket";
+import 'react-native-gesture-handler';
+
 
 const Stack = createStackNavigator();
 

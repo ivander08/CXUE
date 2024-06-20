@@ -1,10 +1,12 @@
 {
   "expo": {
-    "name": "blank",
+    "name": "CXUE",
+    "displayName": "CXUE",
     "slug": "blank",
     "version": "1.0.0",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logoWhiteHD.png",
     "splash": {
+      "image": "./assets/images/background.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -31,7 +33,7 @@
       }
     },
     "android": {
-      "package": "com.rlatksk.blank"
+      "package": "com.rlatksk.CXUE"
     }
   }
 }
